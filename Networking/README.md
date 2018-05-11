@@ -13,6 +13,7 @@ The first four layers are considered the primitive layers. These layers specific
 
 This image taken from Webopedia beautifully showcases the OSI Model in a graphical format. 
 Despite the format I wrote above, the OSI Model goes in descending order, starting from 7.
+
 ![7 Layers of the OSI Diagram](https://www.webopedia.com/imagesvr_ce/8023/7-layers-of-osi-icon.jpg)
 
 ## 7 - The Application Layer:
@@ -32,8 +33,10 @@ The network layer, the third layer in the OSI Model provides the switching and r
 
 # 2 - The Data Link Layer:
 The Data Link layer, the second layer in the OSI Model is responsible for the encoding and decoding between bits and data packets. The layer manages the transmission protocol knowledge and handles errors in the physical layer, flow control systems and frame synchronization systems. The Data Link Layer is comprised of two internal layers.
+
 ## 2(a) - The Media Access Control Layer:
 The Media Access Control layer controls how computers within networks gain access to data. This also includes the permissions to receive and transmit data.
+
 ## 2(b) - The Logical Link Control Layer:
 The Logical Link Control Layer is responsible for the Frame Synchronization, flow control and error checking. 
 
