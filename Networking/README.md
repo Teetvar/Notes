@@ -41,7 +41,9 @@ The Logical Link Control Layer is responsible for the Frame Synchronization, flo
 # 1 - The Physical Layer:
 The physical layer, the first layer in the OSI Model manages the communication of bit's throughout a network from an electrical or mechanical level. The Physical Layer provides the hardware means for sending and receiving communication from cables, network interface cards and other physical aspects of network infrastructure. Ethernet is the most well known Protocol from the Physical Layer.
 
-**Layer**|**Name**|**OSI Protocol**|**TCP/IP Protocols**
+# The Layers and Associated OSI / TCP / IP Protocols:
+
+**Layer**|**Name**|**OSI Protocols**|**TCP/IP Protocols**
 :-----:|:-----:|:-----:|:-----:
 7|Application|FTAM, X.400, X.500, DAP, ROSE, RTSE, ACSE, CMIP| 
 6|Presentation|ISO / IEC 8823, x.226, ISO / IEC 9576-1, X.236|MIME, SSL, TLS, XDR
