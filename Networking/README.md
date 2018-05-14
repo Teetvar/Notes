@@ -13,11 +13,10 @@ The first four layers are considered the primitive layers. These layers specific
 
 This image taken from Webopedia beautifully showcases the OSI Model in a graphical format. 
 Despite the format I wrote above, the OSI Model goes in descending order, starting from 7.
-
 ![7 Layers of the OSI Diagram](https://www.webopedia.com/imagesvr_ce/8023/7-layers-of-osi-icon.jpg)
 
 ## 7 - The Application Layer:
-The application layer, the seventh layer in the OSI Model supports application and end-user processes. The application layer is also responsible for identifying processes such as Communication Partners, Quality of Service, User Authentication, Privacy and all syntax constraints which may affect data. As formerly mentioned, layers 5 to 7 are all Application Specific. You will recognize this layer for its utilization in providing application devices for common actions such as File Transfer and E-Mail Communication. Telnet and FTP are applications which exist completely within this layer. Real life examples of this layer in action include URL Search Bars in Browsers, the HTTP Protocol, the FTP Protocol, the NFS Protocol and the SNMP Protocol. 
+The application layer, the seventh layer in the OSI Model supports application and end-user processes. The application layer is also responsible for identifying processes such as Communication Partners, Quality of Service, User Authentication, Privacy and all syntax constraints which may affect data. As formerly mentioned, layers 5 to 7 are all Application Specific. You will recognize this layer for its utilization in providing application devices for common actions such as File Transfer and E-Mail Communication. Telnet and FTP are applications which exist completely within this layer. Real life examples of this layer in action include URL Search Bars in Browses, the HTTP Protocol, the FTP Protocol, the NFS Protocol and the SNMP Protocol. 
 
 # 6 - The Presentation Layer:
 The presentation layer, the sixth layer in the OSI Model transforms data into a presentable form which the application layer can accept. Also known as the Syntax Layer, the presentation layer encrypts application data to network data, and decrypts Network data into Application Data. This layer essentially provides freedom from compatibility problems, converting data from any format into an accessible source.
@@ -33,12 +32,20 @@ The network layer, the third layer in the OSI Model provides the switching and r
 
 # 2 - The Data Link Layer:
 The Data Link layer, the second layer in the OSI Model is responsible for the encoding and decoding between bits and data packets. The layer manages the transmission protocol knowledge and handles errors in the physical layer, flow control systems and frame synchronization systems. The Data Link Layer is comprised of two internal layers.
-
 ## 2(a) - The Media Access Control Layer:
 The Media Access Control layer controls how computers within networks gain access to data. This also includes the permissions to receive and transmit data.
-
 ## 2(b) - The Logical Link Control Layer:
 The Logical Link Control Layer is responsible for the Frame Synchronization, flow control and error checking. 
 
 # 1 - The Physical Layer:
 The physical layer, the first layer in the OSI Model manages the communication of bit's throughout a network from an electrical or mechanical level. The Physical Layer provides the hardware means for sending and receiving communication from cables, network interface cards and other physical aspects of network infrastructure. Ethernet is the most well known Protocol from the Physical Layer.
+
+**Layer**|**Name**|**OSI Protocol**|**TCP/IP Protocols**
+:-----:|:-----:|:-----:|:-----:
+7|Application|FTAM, X.400, X.500, DAP, ROSE, RTSE, ACSE, CMIP| 
+6|Presentation|ISO / IEC 8823, x.226, ISO / IEC 9576-1, X.236|MIME, SSL, TLS, XDR
+5|Session|ISO / IEC 8327, X.225, ISO / IEC 9548-1, X.234|SOCKETS ( Session establishment in TCP, RPT, PPTP)
+4|Transport|ISO / IEC 8037, TP0, TP1, TP2, TP3, TP4 (X.224), ISO / IEC 8602, X.234|TCP, UDP, SCTP, DCCP
+3|Network|ISO / IEC 8208, X.25 (PLP), ISO / IEC 8878, X.223, ISO / IEC 8473-1, CLNP X.233, ISO / IEC 10589, IS-IS|IP, Ipsec, ICMP, IGMP, OSPF, RIP
+2|Data link|ISO / IEC 7666, X.25 (LAPB), Token Bus, X.222, ISO / IEC 8802-2, LLC (Type 1 & 2)|PPP, SBTV, SLIP
+1|Physical|X.25 (X.21bis, EIA / TIA-232, EIA / TIA-449, EIA-530, G.703)| 
