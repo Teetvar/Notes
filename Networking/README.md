@@ -13,6 +13,7 @@ The first four layers are considered the primitive layers. These layers specific
 
 This image taken from Webopedia beautifully showcases the OSI Model in a graphical format. 
 Despite the format I wrote above, the OSI Model goes in descending order, starting from 7.
+
 ![7 Layers of the OSI Diagram](https://www.webopedia.com/imagesvr_ce/8023/7-layers-of-osi-icon.jpg)
 
 ## 7 - The Application Layer:
