@@ -218,3 +218,103 @@ This is a random selection from a number of slots. If there are further collisio
 ### How are network nodes enabled to deliver an IP packet to the specific physical node with that IP address within the subnet.
 
 The network node needs to resolve the IP address to the physical MAC address in order to deliver to the specific physical node. This is normally achieved through the ARP. The sending node broadcasts an ARP request within the subnet, and the node with that IP address responds. The sending node can then resolve the IP address to MAC address and sends the packet. Normally nodes will cache the address resolution for a period of time.
+
+# Even more Networking Notes:
+
+### What are the characteristics expected of a reliable transport layer, such as the TCP of the TCP/IP protocol suite.
+
+* Deliver data in same order as sent
+* Retransmit lost or corrupted data
+* Flow control to prevent loss by application
+
+### What is the window protocol of the TCP and how does it overcomes the limitation of round trip time to achieve full rate transmission within an extended network.
+
+Multiple packets are transmitted and are in flight before acknowledgement is received for the first transmitted packet. The window is made large enough so that packets are transmitted continually and there is no pause to wait for an acknowledgement, and so transmission is maintained at full speed. 
+
+### How does TCP manage its rate of transmission to ensure that a network does not become congested and bandwidth is shared fairly between users.
+
+TCP uses the congestion algorithm with slow start -up to match transmission rate to prevailing network conditions. Slow start up sends 1, 2, 4, 8 etc packets until loss, to ramp up to transmission speed, then uses linear growth. If there is further loss, then transmission rate is halved. Suitable diagram to be added. 
+
+### When would UDP be the protocol of choice over TCP.
+
+UDP is used for simple applications that have a single request and response which can each be placed in a single packet. This reduces significantly the number of packets (typically 2 in place of 9).
+UDP is used for real time applications, such as multi-media, in order to deliver packets timely as there is no re-transmission which could cause freeze in play out if re-transmitted packet is not received in time.
+
+### what is a subnet in a network system.
+
+A subnet is a single address domain, where all network nodes are addressed with the same subnet address and differentiate by their node address. This normally corresponds to a single LAN domain.
+
+### What are the advantages of segmenting networks using a combination of routers and switches within an organisation:
+* Physical extension of network – subnets located in separate locations
+* Increase capacity – physical limitation of limited number of node addresses on single subnet
+* Reduce load – subnet can become overloaded so distribute to multiple subnets
+* Security – isolate secure systems on separate subnet
+* Resilience – isolate faults (e.g. virus)
+
+### Why would you place a Web Server on an Isolated Subnet within a Network:
+
+Isolated Subnets can be configured with controlled access from public network but remain isolated from internal networks to prevent spread of virus or unauthorized access to internal systems
+
+###	How are network enabled to deliver an IP packet to the specific physical node with that IP address within a subnet.
+
+ARP is used to resolve an IP address to its MAC address. ARP broadcasts a packet on the subnet requesting the node with a specified IP address to respond the requesting node.
+
+### What is meant by the “public” network and a private network. How are these differentiated by the IP address of the network?
+
+The public network refers to the interconnected network of organisations that supports inter communication between all connected organisations.
+A private network is an isolated network that is not connected to the public network and will use an IP address that denies routing of packets to the public network.
+Three private addresses are defined, one for each class:
+* 10.0.0.0
+* 172.16.0.0
+* 192.168.0.0 
+
+### How is a computer configured in a private network enabled to communicate with a server in the public network by use of a NAT router. How is the concept of the private network being exploited in current networks?
+
+The NAT router performs a translation of the source IP address from the private source address of the private network to the public address of the NAT router, and appends a source port number to ensure that the address::port is unique. The NAT router maintains a mapping table so that a returning packet can have the incoming public destination address::port replaced by the appropriate private address::port.
+
+There is a shortage of IP V4 addresses. The private network allows the connection of many computers that can share the single IP address of the NAT router and exploit the large range of unused port addresses, and so extend the lifetime of the current addresses.
+
+### What is meant by an A, B and C class internet address. 
+
+The intention was to create different classes in order that an organisation could be allocated a class that would include a number of addresses appropriate to its size. A class gave many (2^24), B class (65k) and C class (256).
+The address range was split using simple binary rules (exact addresses are not expected to gain marks, only the principles)
+| Class | Binary| Address | Subnet Mask |
+|:----------:|:----------:|:----------:|:----------:|
+| A Class | 00000000 | 0.0.0.0 | 127.255.255.255 |
+| B Class | 10000000 | 128.0.0.0 | 191.255.255.255 |
+| C Class | 11000000 | 192.0.0.0 | 223.255.255.255 |
+| D Class | 11100000 | 224.0.0.0 |
+
+###  Let us assume a organisation is provided with a C Class internet address of 202.18.6.0/24 and decides that it will create 4 identical subnets internally.
+
+#### What will be the subnet mask for each of the internal subnets?
+* 255.255.255.192   (or /26)
+
+#### How many hosts can be placed on each of the internal subnets? Explain your answer. 
+
+The C Class network has 256 addresses and this split into 4 giving 64 addresses per subnet; however 2 are lost to subnet address and broadcast address, so 62 hosts.
+
+#### If the router is allocated the first IP address on each subnet, what is the IP address of the router on each of the subnets?
+
+* 202.18.6.1, 
+* 202.18.6.65
+* 202.18.6.129
+* 202.18.6.193
+
+### How might the DHCP protocol be used by network administrators to manage the IP address and configuration of network nodes that are connected to a subnet. 
+
+DHCP protocol is used by client to request information from the DHCP server on IP address, subnet mask, default gateway, DNS server. The client sends its MAC address, and so addresses can be reserved to ensure a client is given specific IP address each time. Each client is given a lease time for the IP address which must be renewed. If not renewed the IP address can be reallocated to a new client requesting an IP address. This allows limited pool of addresses to be used by larger number of clients.
+
+#### How does the DNS protocol supports human users to use easily remembered names for web sites.	(5 marks)
+
+DNS is a distributed database system that manages the mapping of names to IP addresses. The naming system is hierarchical; with top level domains managed by the root DNS servers that record the location of the local DNS servers that manage the sub-level names for the domain.
+
+When a DNS request is made, the query is passed to the specified local DNS server to resolve. If it cannot resolve it passes to specified root server(s). These pass to local DNS server. The response is returned long the chain.
+
+### Let us assume, A small company establishes its servers within a private network and connects these to the public network through a NAT router. The NAT router obtains its public IP address from the ISP using DHCP.
+
+#### What are the issues that exist for the company in providing public access to its server and ways in which these may be overcome. 
+The use of DHCP will result in a different IP address being allocated to the public port of the NAT router. DNS can be used to map the name of the server to the changing IP address. This is referred to as Dynamic DNS.
+There are the issues of configuring the NAT router to map the external ports to the internal address::port of the server and the limitation that an external port can only be mapped once and so limiting the number of distinct servers that can be configured.
+
+
