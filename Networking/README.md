@@ -130,3 +130,91 @@ _Aah, so that's what NAT stands for!_
 _-Pointdexter...._
 
 The NAT router maps the internal IP address of the computer to the public address of the router, using a mapping table, so that returning packets can be delivered to the correct computer. To support multiple computers on a private network, the NAT router will map the port number from the internal computer to an arbitrary port number on the public network, maintaining the tuple in the mapping table.
+
+### What are the three main principles of network security?
+
+#### Encryption, Authentication & Non-Repudiation
+
+<sup>To **repudiate** means to deny or contest something. Therefore, non-repudiation must be the ability to ensure that someone cannot deny or contest that thing. This is usually seen in electronic communications where one party cannot be confirmed as the recipient or denies seeing or signing a contract or document. Non-repudiation means putting measures in place that will prevent one party from denying they received or agreed to a transaction.</sup>
+
+### What are the main forms of attack that can be made on the security of computer systems?
+The most common forms of attack on the security of computer systems include:
+* Eaves-dropping
+* Replay
+* Denial of Server (Distributed Denial of Service) 
+
+and so on. 
+
+### What is Public Key and Symmetric Key Encryption and what are the main ways in which the two differ?
+
+#### Public Key:
+Uses two keys, the private key is kept secret by the owner, and the public key is known openly. Any plaintext can be encoded by either the public or private key, but the opposite is required to decode. Encoding is computation intensive. Therefore used to encode relatively short messages.
+
+#### Symmetric Key:
+Uses same key to encode and decode. It must be kept secret by sender and receiver. Encoding is much less computation intensive than public so used for large messages.
+
+### What are Digital Certificates?
+
+Digital certificates are used to prove the authenticity of the party presenting the certificate. They are in the form of a statement that is authenticated by a trusted party. The authentication is normally signed by the trusted party using  their private to encode the signing and is authenticated by decoding with the public key
+
+### What are the most important features of the Transmission Control Protocol which provide a reliable service within networks:
+
+A reliable transport will provide the following as features:
+
+* Error detection
+	* Error correction (retransmission or forward error correction)
+* Flow control
+	* Guaranteed order of delivery
+
+TCP also provides traffic shaping through congestion algorithm and window protocol to maintain full transmission rate
+
+### Consider the problems that might arise if an application sends data at a "Full Rate" over a network without taking into account prevailing conditions.
+
+#### 1. What problems arise if computers send data at full rate?
+
+The network will overload and packets will be lost when buffers overflow. This will result in retransmission adding further to congestion. Packets will arrive out of order and require buffering. This can impact applications.
+Applications will not be able to accept and process data at the rate they are arriving. Data may be lost by the application.
+
+#### 2. How is the Transmission Control Protocol designed to overcome these problems?
+
+The congestion algorithm is used to shape traffic flow to match prevailing network conditions. Retransmission will overcome lost packets
+Flow control prevents overload in the application
+
+#### How would the throughput typically vary within a network
+Suitable diagrams demonstrating TCP management typically showcase a slow start up followed by half drop when packet loss detected and then linear growth back to packet loss
+![Image result for typical TCP packet transfer graph](https://www.cisco.com/c/dam/en_us/about/ac123/ac147/images/ipj/ipj_9-2/92_gig_fig_02_lg.jpg)
+
+### Multi-Media applications are known for constant transfers of data, whether in the form of imagery or audio, what would be the the most preferred TRANSPORT LAYER protocol to support such applications within networks?
+
+##### _Pssst, The Transport layer is the forth layer on the OSI reference model_ (Check previous notes)
+
+UDP is used to transport packets in the network however, UDP has no retransmission; this is not required in this application as arrival time and order of packets is unpredictable and may arrive too late. RTP would be used to carry the multimedia packets as payload of the UDP packets in order to carry information on order, timing and sequence. Other protocols may be used in addition to support multi-media application such as H323, SIP and RSVP.
+
+### What are the main physical topologies employed to implement networks.
+
+* Bus
+* Star
+* Point to Point
+* (wireless)
+
+### Describe the CSMA/CD medium access protocol.
+
+CSMA/CD or Carrier Sense, multiple access, collision detection, is the main protocol used for cable bus networks.
+
+All nodes monitor the bus for silence before attempting to access the bus (carrier sense).
+
+When silence is detected, all nodes waiting to transmit are allowed to attempt to transmit their data (multiple access).
+
+Transmitting nodes monitor their transmission to detect if it is corrupted because 2 or more nodes are attempting to transmit at the same time (collision detection).
+
+Transmission of data (minimum packet length) must be longer than maximum round trip time of the network to ensure corruption can be detected.
+
+When collision detected, sending station exerts a jamming signal, then transmission terminates.
+
+Transmitting stations must alter the period before attempting to resend in order to resolve contention. 
+
+This is a random selection from a number of slots. If there are further collisions then the number is increased, by a factor of 2. This is termed binary exponential back off.
+
+### How are network nodes enabled to deliver an IP packet to the specific physical node with that IP address within the subnet.
+
+The network node needs to resolve the IP address to the physical MAC address in order to deliver to the specific physical node. This is normally achieved through the ARP. The sending node broadcasts an ARP request within the subnet, and the node with that IP address responds. The sending node can then resolve the IP address to MAC address and sends the packet. Normally nodes will cache the address resolution for a period of time.
