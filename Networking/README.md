@@ -53,3 +53,60 @@ The physical layer, the first layer in the OSI Model manages the communication o
 3|Network|ISO / IEC 8208, X.25 (PLP), ISO / IEC 8878, X.223, ISO / IEC 8473-1, CLNP X.233, ISO / IEC 10589, IS-IS|IP, Ipsec, ICMP, IGMP, OSPF, RIP
 2|Data link|ISO / IEC 7666, X.25 (LAPB), Token Bus, X.222, ISO / IEC 8802-2, LLC (Type 1 & 2)|PPP, SBTV, SLIP, ARP, NDP, OSPF, MAC (Ethernet, DSL, ISDN, FDDI)
 1|Physical|X.25 (X.21bis, EIA / TIA-232, EIA / TIA-449, EIA-530, G.703)| 
+
+
+# Additinoal Networking Notes
+#### Short, subtle notes of interest within Network Infrastructure Revision.
+
+### TTL (Time to Live):
+TTL or Time To Live, is a common error typically recorded in network monitors such as Wireshark. The issue occurs when the TTL is exceeded. In short, this error occurs when too many hops to reach a destination have occured, before the TTL has been decremented to zero / 0.
+
+### Packet Changes throughout IP Packet transfer:
+When an IP Packet is transferred through a server, from a Router, all fields within the packet will remain the same apart from the TTL and the Checksum in which, the TTL will decremented to Zero while the Checksum will be recalculated.
+
+### how does the Trace-route utility map the path from source to destination?
+Typically, the TTL field is used to force an error in each node throughout it's path, these nodes being routers. 
+
+### What is the main cause of Fragmentation within Packets?
+Fragmentation of packets occur whe the length of the IP Protocol Data Unit (PDU) exceed the size of the Media Access Control (MAC) Frame.
+#### How is Fragmentation Indicated?
+Fragmentation flags are set to indicate that further fragments will follow and the offset field is prepared for this fragmentation.
+
+### What is a Subnet within a Network System?
+An IP network is split into two sections, the core and the organisation. An organisation is given a block of addresses for its use. Each organisation s free to manage its block in a way it chooses; it an have one internal network or split the single block into smaller subsets. 
+
+### What is the purpose of a Subnet Mask?
+#### If a Subnet has a mask of 255.255.255.192, how many hosts does it have?
+The Subnet mask indicates which bits in the IP Address are used as the address of the subnet and which are the address of the host on the subnet.
+
+Regarding 255.255.255.192, 6 bits are reserved for the subnet, giving 64 potential addresses however; The first (.0) and last (.255) are reserved as the subnet address and the broadcast address, this gives us a total of 62 hosts.
+As an additional note, we're dealing with a Class B Subnet Network. 
+
+Class B Subnet Calculations
+| Mask | Binary | Subnets | Hosts per subnet |
+|:-------------:|:-------------:|:-------------:|:-------------:|
+| 255.255.128.0 | 10000000.00000000 | 2 | 32,766 |
+| 255.255.192.0 | 11000000.00000000 | 2 | 16,382 |
+| 255.255.224.0 | 11100000.00000000 | 6 | 8,190 |
+| 255.255.240.0 | 11110000.00000000 | 14 | 4,094 |
+| 255.255.248.0 | 11111000.00000000 | 30 | 2,046 |
+| 255.255.252.0 | 11111100.00000000 | 62 | 1,022 |
+| 255.255.254.0 | 11111110.00000000 | 126 | 510 |
+| 255.255.255.0 | 11111111.00000000 | 254 | 254 |
+| 255.255.255.128 | 11111111.10000000 | 510 | 126 |
+| 255.255.255.192 | 11111111.11000000 | 1022 | 62 |
+| 255.255.255.224 | 11111111.11100000 | 2,046 | 30 |
+| 255.255.255.240 | 11111111.11110000 | 4,094 | 14 |
+| 255.255.255.248 | 11111111.11111000 | 8,190 | 6 |
+| 255.255.255.252 | 11111111.11111100 | 16,382 | 2 |
+
+#### How to calculate?
+Well, take this example, 255.255.255.192:
+1.  2-2=1022 subnets.
+	<sup>(2^n^where N is the number of borrowed bits.)</sup>
+2.  2-2=62 hosts per subnet
+	<sup>((Formula: 2^(32 - n)^ - 2) where N is the number of subnet Masks.</sup>
+4.  256-255=1.0, 2.0, 3.0, etc. for the third octet. 256-192=64, 128, 192 for the fourth octet. For every valid subnet in the third octet, we get four subnets in the fourth octet: 0, 64, 128, and 192.
+5.  Broadcast for the 1.0 subnet is 1.63, since the next subnet is 1.64. Broadcast for the 1.64 subnet is 1.127, since the next subnet is 1.128. Broadcast for the 1.128 subnet is 1.191, since the next subnet is 1.192. Broadcast for the 1.192 subnet is 1.255.
+
+ 
