@@ -55,7 +55,7 @@ The physical layer, the first layer in the OSI Model manages the communication o
 1|Physical|X.25 (X.21bis, EIA / TIA-232, EIA / TIA-449, EIA-530, G.703)| 
 
 
-# Additinoal Networking Notes
+# Networking Notes
 #### Short, subtle notes of interest within Network Infrastructure Revision.
 
 ### TTL (Time to Live):
@@ -103,15 +103,27 @@ Class B Subnet Calculations
 
 #### How to calculate?
 Well, take this example, 255.255.255.192:
-1.  2-2=1022 subnets.
+1. 2-2=1022 subnets:
+	(2<sup>n</sup>where N is the number of borrowed bits.)
 	
-	(2<sup>n</sup> where N is the number of borrowed bits.)
-	
-2.  2-2=62 hosts per subnet
-	
+2. 2-2=62 hosts per subnet:
 	((Formula: 2<sup>(32 - n)</sup> - 2) where N is the number of subnet Masks.
 	
-4.  256-255=1.0, 2.0, 3.0, etc. for the third octet. 256-192=64, 128, 192 for the fourth octet. For every valid subnet in the third octet, we get four subnets in the fourth octet: 0, 64, 128, and 192.
-5.  Broadcast for the 1.0 subnet is 1.63, since the next subnet is 1.64. Broadcast for the 1.64 subnet is 1.127, since the next subnet is 1.128. Broadcast for the 1.128 subnet is 1.191, since the next subnet is 1.192. Broadcast for the 1.192 subnet is 1.255.
+3.  256-255=1.0, 2.0, 3.0, etc. for the third octet. 256-192=64, 128, 192 for the fourth octet. For every valid subnet in the third octet, we get four subnets in the fourth octet: 0, 64, 128, and 192.
 
- 
+4.  Broadcast for the 1.0 subnet is 1.63, since the next subnet is 1.64. Broadcast for the 1.64 subnet is 1.127, since the next subnet is 1.128. Broadcast for the 1.128 subnet is 1.191, since the next subnet is 1.192. Broadcast for the 1.192 subnet is 1.255.
+
+ ### What is a Private Network?
+ A private network is a network that is not connected to the public internet, as we remember, the Internet is an <b>Inter</b>connected <b>net</b>work of networks.
+ _What strange bold marks... It's as if I'm hinting something..._
+
+By convention, a private network is given a subnet address from one of the reserved IP ranges that are designated for private networks and will ensure that a router does not convey traffic from the private network to a public network.
+
+### How would a Private Network Communicate with a server on a public network?
+
+Private networks can be connected to public networks through a Network Address Translating router or NAT Router.
+
+_Aah, so that's what NAT stands for!_
+_-Pointdexter...._
+
+The NAT router maps the internal IP address of the computer to the public address of the router, using a mapping table, so that returning packets can be delivered to the correct computer. To support multiple computers on a private network, the NAT router will map the port number from the internal computer to an arbitrary port number on the public network, maintaining the tuple in the mapping table.
