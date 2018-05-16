@@ -278,6 +278,7 @@ There is a shortage of IP V4 addresses. The private network allows the connectio
 
 The intention was to create different classes in order that an organisation could be allocated a class that would include a number of addresses appropriate to its size. A class gave many (2^24), B class (65k) and C class (256).
 The address range was split using simple binary rules (exact addresses are not expected to gain marks, only the principles)
+
 | Class | Binary| Address | Subnet Mask |
 |:----------:|:----------:|:----------:|:----------:|
 | A Class | 00000000 | 0.0.0.0 | 127.255.255.255 |
