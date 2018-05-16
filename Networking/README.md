@@ -83,6 +83,7 @@ Regarding 255.255.255.192, 6 bits are reserved for the subnet, giving 64 potenti
 As an additional note, we're dealing with a Class B Subnet Network. 
 
 Class B Subnet Calculations
+
 | Mask | Binary | Subnets | Hosts per subnet |
 |:-------------:|:-------------:|:-------------:|:-------------:|
 | 255.255.128.0 | 10000000.00000000 | 2 | 32,766 |
