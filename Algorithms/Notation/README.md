@@ -13,7 +13,7 @@ Here is a demonstration of these two factors written by Khan Academy:
 
 ![](https://media.discordapp.net/attachments/334011383140188161/447322423097032709/unknown.png?width=634&height=520)
 
-The value of n at which 0.6n<sup>2<sup> becomes greater than 1000n+3000 has increased, but there will always be such a crossover point, no matter what the constants.
+The value of n at which 0.6n<sup>2</sup> becomes greater than 1000n+3000 has increased, but there will always be such a crossover point, no matter what the constants.
 
 From the simplification of these mathematical formulas and coefficients, we can focus on the true performance of algorithms, through calculating the Rate of Growth and Runtime.
 This simplification of algorithm complexity is done through the usage of **Asymptotic Notation.**
