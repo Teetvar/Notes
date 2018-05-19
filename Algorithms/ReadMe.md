@@ -54,6 +54,35 @@ Everything you need to know.
 		- [Relatives of Big-Oh](#relatives-of-big-oh)
 		- [Asymptotic Notation](#asymptotic-notation)
 		- [Why is Big-Oh the interesting one?](#why-is-big-oh-the-interesting-one)
+	- [Data Strucutres and their Applications:](#data-strucutres-and-their-applications)
+		- [A note on Complexity](#a-note-on-complexity)
+		- [Why study Data Structures?](#why-study-data-structures)
+		- [Lists](#lists)
+			- [Two ways to implement lists:](#two-ways-to-implement-lists)
+		- [Stacks](#stacks)
+			- [Using Stacks](#using-stacks)
+		- [Queues](#queues)
+			- [Using Queues](#using-queues)
+			- [How to Implement Queues](#how-to-implement-queues)
+		- [Hash Tables](#hash-tables)
+			- [How to Implement Hash Tables](#how-to-implement-hash-tables)
+		- [Applications](#applications)
+		- [Graphs](#graphs)
+		- [An Abstract View of Graphs](#an-abstract-view-of-graphs)
+		- [Why Study Graphs?](#why-study-graphs)
+		- [How can graphs help?](#how-can-graphs-help)
+		- [How to define a graph?](#how-to-define-a-graph)
+		- [Graph Definitions](#graph-definitions)
+			- [Directed Graphs](#directed-graphs)
+			- [Undirected Graphs](#undirected-graphs)
+			- [Complete Graphs](#complete-graphs)
+			- [Paths](#paths)
+			- [Connectivity](#connectivity)
+			- [Weighted Graph](#weighted-graph)
+		- [Connected Graph](#connected-graph)
+		- [Weighted Graph](#weighted-graph)
+		- [How to Represent a Graph](#how-to-represent-a-graph)
+		- [Trees](#trees)
 
 <!-- /TOC -->
 
@@ -494,3 +523,270 @@ By convention the variables i,j and k are often used for subscripts
   - Big-Oh is the class of functions that will be of the greatest interest to us
   - Considering two algorithms, we will want to know if the first is in Big-Oh of the second
   - If yes, we know that the second algorithm does not do better than the first in solving the problem
+
+## Data Strucutres and their Applications:
+
+### A note on Complexity
+  - Regarding NP-Hard and NP-Complete problems…
+    - The best algorithm to solve them is often O(2n) at best…
+    - We show that a problem resembles a known NP-Complete/NP-Hard problem…
+    - We then know what we are dealing with…
+    - That is why in this module we will look at what might seem “toy” problems…
+
+### Why study Data Structures?
+  - Data structures are the “foundations” of all algorithms
+    - Do not build on bad foundations…
+  - Representing the problem you are solving correctly will vastly help in designing a solution
+  - The use of the correct data structure will speed up an algorithm
+    - E.g. Sorting a list of 1,000 names
+      - You would use a string array rather than 1,000 string variables!
+
+### Lists
+  - A list is a sequence of zero or more data items
+  - The total number of items is said to be the length of the list
+  - The length of a given list can grow and shrink on demand
+  - Items can be accessed, inserted, or deleted at any position in a list
+
+#### Two ways to implement lists:
+  - Array Limitation:
+    - "Remember" where the end of the list is.
+      - ![](https://cdn.discordapp.com/attachments/334011383140188161/447402629467734027/unknown.png)
+  - Linked List implementation
+    - Use a class that contians both the data and a pointer / reference to the next item in the lists.
+      - ![](https://cdn.discordapp.com/attachments/334011383140188161/447402778906722314/unknown.png)
+  - Both representations have their pros and cons.
+
+### Stacks
+  - A stack is a special kind of list in which all insertions and deletions take place at one end
+  - This is called the top
+  - It has another name: “pushdown list‘”
+  - Its items are added and deleted on a **last-in-first-out (LIFO) basis**
+
+#### Using Stacks
+  - To add an item to a stack, you push an item onto the top
+  - To remove an item from the top you pop it
+  - In the example below the top of the stack is on the right hand side
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447403324208185344/unknown.png)
+
+### Queues
+  - A queue is another special kind of list
+    - Items are inserted at one end (the rear)
+    - Items deleted at the other end (the front)
+  - A queue is a FIFO type data structure
+    - The items are deleted in the same order as they were added
+    - On a **first-in-first-out basis**
+  - For a queue structure, we have two special names for insertion and deletion:
+    - **ENQUEUE**
+    - **DEQUEUE**
+
+#### Using Queues
+![](https://cdn.discordapp.com/attachments/334011383140188161/447403966394007552/unknown.png)
+
+#### How to Implement Queues
+  - How do we make both the enqueue and dequeue operations efficient?
+    - Avoid shifting items
+  - **Enqueue**
+    - tail=(tail+1) mod size
+  - **Dequeue**
+    - head=(head+1) mod size
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447404393617162241/unknown.png)
+
+### Hash Tables
+  - A Hash table or Hash Map is a data structure that maps a Key to a Value
+  - A special function called a Hash Function performs this mapping
+  - This function usually maps the key to an index in an array
+
+![](https://media.discordapp.net/attachments/334011383140188161/447404648848949248/unknown.png?width=492&height=213)
+
+#### How to Implement Hash Tables
+  - An initial set of space is allocated in the array
+  - The hash function maps the key to an array index
+  - The function should map within the array bounds
+  - Care must be taken to avoid collisions
+  - Different keys mapping to the same index
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447405116333490177/unknown.png)
+
+### Applications
+  - Lists
+    - Often used to implement queues and stacks
+    - Used for sparse matrices
+    - Matrices where most of the elements are zero…
+  - Stacks
+    - Expression evaluation
+    - Compilers – syntax evaluation
+    - Calculators employing Reverse Polish notation (ab+)
+  - Queues
+    - Printer queues
+    - Email – message queues
+    - Network routing
+  - Hash Tables
+    - Address books
+    - Storing passwords (we don’t store the actual password)
+    - Caching
+
+### Graphs
+  - We are going to look in depth at a very useful data structure
+  - This is the **Graph**
+  - Example of uses include:
+    - Road maps
+    - Project networks
+    - Electrical circuits
+    - Molecules
+      - Relationships between genes, proteins, pathways
+    - Relationships
+      - Family tree
+      - Students on courses
+
+### An Abstract View of Graphs
+  - A graph is a collection of nodes (**Vertices**) which may be connected in pairs by line segments called **Edges**.
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447406196840988672/unknown.png)
+
+### Why Study Graphs?
+  - Example:
+    - Airline Rout Maps - An Undirected Graph.
+    - Cities - Points(Nodes, Vertex)
+    - Non-Stop-Flights - lines connecting two cities (edges, arcs)
+
+  - Computer Networks!
+    - Computuers - Points (Nodes, Vertex)
+    - Cables - Lines connecting two computers (edges, arcs).
+
+  - What are the possible tasks of graphs!
+    - Shortest Cables,
+    - Lowest Costs
+    - Quickest Delivery
+    - Reliable
+    - Fault-Tolerant
+      - Many many more applications (tube, sat-nav).
+
+### How can graphs help?
+  - Questions
+    - What is the cheapest way to fly from London to Rome?
+    - Which route has the least flying time?
+    - If Heathrow is closed by bad weather, can you still fly between every other pair of cities, such as Edinburgh-Rome, Manchester-Rome?
+    - If one computer in a network goes down, can email be sent between every other pairs of computers in the network?
+  - Graph algorithms can solve the above problems!
+
+### How to define a graph?
+  - What are the basic components of a graph?
+  - A graph G = (V,E) is composed of:
+    - V: a set of vertices or nodes
+    - E: a set of edges or lines connecting the vertices in V
+    - An edge e=(u,v) is a connection between the vertices u and v
+  - In the example below:
+    - V={1,2,3,4,5}
+    - E={(1,2),(1,3),(3,5),(2,5),(5,4)}
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447457398618324992/unknown.png)
+
+### Graph Definitions
+#### Directed Graphs
+  - A Directed graph is a pair G=(*V,E*)
+  - Where V is the set of vertices, and E is a set of ordered pairs of elements of V
+  - For directed edges (v, w) is in E, v is tail, w is head
+  - It can be represented as v -> w or vw
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447458122748002305/unknown.png)
+
+#### Undirected Graphs
+  - An undirected graph is a pair G=(V, E), where E is a set of unordered pairs of distinct elements of V
+  - For undirected graphs, vw = wv
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447458450138726410/unknown.png)
+
+#### Complete Graphs
+  - A complete graph is normally an undirected graph with an edge between each pair of vertices
+  - G=(V, E)
+  - ∀e ∈ V*x*V -> e ∈ E
+    - We've not covered this but "*∀*" means "for all" but is also a symbol for "Universal Quantifier".
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447459736229773332/unknown.png)
+
+#### Paths
+  - A sequence of k vertices, [v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>k</sub>], such that any pair of consecutive vertices, v<sub>i</sub>, v<sub>i+1</sub> are adjacent (connected by an edge) is called a **path** (sometimes called a **walk**).
+  - [1,2,3,4,5] is a path.
+  - [1,5,2,4] is not a path.
+  - [1,2,3,1] is a path that contains a **cycle**.
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447460564952940575/unknown.png)
+
+#### Connectivity
+  - n undirected graph is connected if and only if for each pair of vertices v and w, there is a path from v to w
+  - A directed graph is strongly connected if and only if for each pair of vertices v and w, there is a path from v to w
+
+#### Weighted Graph
+  - A weighted graph is a triple G=(V, E, W)
+  - Where W:E -> R
+  - W(e) is called the weight of edge e
+
+### Connected Graph
+![](https://cdn.discordapp.com/attachments/334011383140188161/447461083255668739/unknown.png)
+
+### Weighted Graph
+![](https://cdn.discordapp.com/attachments/334011383140188161/447461315901128704/unknown.png)
+
+### How to Represent a Graph
+  - We often represent a graph as a matrix (2D array), although other data structures can be used depending on the application
+  - If we have N nodes to represent
+    - For an N by N matrix G, a non zero value of g<sub>i</sub><sub>j</sub> (ith row, jth column of G) means there is an edge between node i and j
+  - Undirected
+    - We assume that g<sub>i</sub><sub>j</sub> is the same as gji
+  - Directed
+    - g<sub>i</sub><sub>j</sub> is not always the same as gji
+  - Non-weighted
+    - g<sub>i</sub><sub>j</sub> is either one for an edge or zero for no edge
+  - Weighted
+    - g<sub>i</sub><sub>j</sub> is the edge weight or zero for no edge
+  - Complete
+    - g<sub>i</sub><sub>j</sub> is never zero
+
+### Trees
+  - These are a special graphs without cycles
+  - Hieratical graph
+  - Root
+    - The only node at the topmost part of the tree
+  - Child nodes have parents
+  - All of the rest of the nodes must be linked to a parent note, and may have zero or more child nodes
+  - Leaf
+    - A Node without children
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447463143741063168/unknown.png)
+
+  - A binary tree is a special type of tree where the maximum number of children is two
+  - Trees are usually ordered from the top to the bottom and left to right
+  - The height of a tree is the number of levels
+  - Trees are very fast to search
+    - Binary search
+  - Trees can be implemented in a manner similar to a linked list, but each node can point to two (or more) other nodes
+  - There are a very large number of applications of trees
+    - Spell checkers
+    - Parse trees in compilers
+    - Computer file systems
+    - Organisational structures and hierarchies
+    - Gene ontology data (functional relationships)
+      - Etc...
+
+  - We assume, when searching Trees that the left side elements are before the parent in terms of value, such as alphabetical order.
+  - We assume Right Side elements are higher value or "after" the parent. 
+
+  - To add a node, we first search for the node we are adding
+    - Searching for Stan
+      - Start at the root node Mary
+      - Greater than Mary, move to Tina
+      - Less than Tina, move to Paul
+      - Greater than Paul, no right node, failure to find key...
+  - Now we add the node where we expected to find it
+    - Deleting is more difficult...
+    - What if we delete Mary?
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447464377122160660/unknown.png)
+
+  - Trees can become unbalanced
+  - Especially if we add and remove a large number of nodes
+  - The height of the tree can grow until the tree becomes a **linked list** 
+  - Special types of self balancing trees have been developed
+    - AVL, Red-Black, etc…
