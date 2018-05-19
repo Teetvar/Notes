@@ -28,6 +28,15 @@ Everything you need to know.
 		- [Subscripts](#subscripts)
 		- [Summation](#summation)
 		- [Products](#products)
+		- [Factorial](#factorial)
+		- [Permutation](#permutation)
+		- [Combination](#combination)
+		- [Permutations and Combinations](#permutations-and-combinations)
+		- [Floor and Ceiling Functions](#floor-and-ceiling-functions)
+			- [Floor](#floor)
+			- [Cieling](#cieling)
+		- [Logarithms](#logarithms)
+		- [Other topics of Mathematical Foundatation which maybe of interest:](#other-topics-of-mathematical-foundatation-which-maybe-of-interest)
 
 <!-- /TOC -->
 
@@ -257,3 +266,72 @@ By convention the variables i,j and k are often used for subscripts
 | Product | Ouput |
 |:----------:|:----------:|
 | ![](https://camo.githubusercontent.com/d17b1fd5780e08d954c627d8e0eeab197755f155/68747470733a2f2f6c617465782e636f6465636f67732e636f6d2f6769662e6c617465783f25323425323453253230253344253230253543646973706c61797374796c6525354370726f645f25374269253344312537442535452537424e253744253230585f6925323025354525374232253744253234253234) | S = X<sub>1</sub><sup>2</sup>,X<sub>2</sub><sup>2</sup>,X<sub>3</sub><sup>2</sup>,…X<sub>n</sub><sup>2</sup> |
+
+### Factorial
+- The Notation _n_! (n Factorial) is defined as multiple all of the integers between 1 and _n_ together!
+
+| Factorial |
+|:---------:|
+| ![](https://media.discordapp.net/attachments/334011383140188161/447370999801970718/unknown.png?width=382&height=138)  |
+
+| Example! |
+|:---------:|
+| 6! = 1.2.3.4.5.6 = 720 |
+
+- n! also gives the number of possible arrangements of n items.
+- Note that 0! = 1, undefined for n < 0
+
+### Permutation
+- The number of ways that r_ odered items can be picked from _n_ items is defined as:
+![](https://cdn.discordapp.com/attachments/334011383140188161/447371765648195585/unknown.png)
+
+### Combination
+- The number of ways that _r_ unordered items can be picked from _n_ items is defined as:
+![](https://cdn.discordapp.com/attachments/334011383140188161/447372090216022016/unknown.png)
+
+### Permutations and Combinations
+- If the order is important thhen we use permutations otherwise we use combinations.
+- For example, if the key code to a lock is 745, then 574 would not open it!
+  - Permuations, there are P<sub>3</sub><sup>10</sup> = 720 ways of choosing a 3-diget key code from the 10 digets.
+- If we like a fruit salad containing banana, pear and grapes, then the order doesn't matter!
+  - Combinations, there are C<sub>3</sub><sup>10</sup> = 120 ways of choosing three fruits from ten fruits.
+
+### Floor and Ceiling Functions
+#### Floor
+- ⌊*x*⌋ is the largest integer less than or equal to *x*
+- ⌊*x*⌋ ≤ *x*
+- ⌊*17.3*⌋ = 17
+
+#### Cieling
+- ⌈*x*⌉ is the smallest integer greater than or equal to x.
+- ⌈*x*⌉  ≤ *x*
+- ⌈*17.3*⌉ = 18
+
+### Logarithms
+| Logarithm  | Meaning                |
+|:----------:|:----------------------:|
+| Log<sub>b</sub>(x)=y|x = b<sup>y</sup>|
+| Log<sub>b</sub>(b)|1<br>b<sup>1</sup>=b for all b ≠ 0|
+| Log<sub>b</sub>(1)|0<br>b<sup>0</sup>=1 for all b ≠ 0|
+| Log<sub>b</sub>(xy)|Log<sub>b</sub>(x)+Log<sub>b</sub>(y)|
+| Log<sub>b</sub>(x/y)|Log<sub>b</sub>(x)-Log<sub>b</sub>(y)|
+| Log<sub>b</sub>(xy)|yLog<sub>b</sub>(x)|
+| Log<sub>b</sub>(x)|Loga(x)/Loga(b)|
+| Log<sub>b</sub>(x)|Log<sub>b</sub>(x) where x ≤ 0 is undefined |
+
+- For Example:
+  - Log<sub>10</sub>(1000) = 3.
+  - Log<sub>2</sub>(8) = 3
+- Note that:
+  - if *y* = *exp(x)* then *ln(y) = x*
+  - This is known as nural Logarithm
+- if *y = a<sup>x</sup>b<sup>z</sup>* Then
+  - ln(*y*) = ln(*a<sup>x</sup>*)+ln(b<sup>z</sup>) = xln(*a*) + zln(*b*)
+
+### Other topics of Mathematical Foundatation which maybe of interest:
+- Probability
+  - Generating 1 in n chances
+- Summing Series
+  - Adding up 1+2+3+4+....+n
+- Summary Statistics
+  - Mean, median, variance, etc...
