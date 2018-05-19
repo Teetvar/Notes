@@ -11,7 +11,6 @@ Everything you need to know.
 			- [Estimating "Running Time":](#estimating-running-time)
 		- [T(_n_) & O(_n_) :](#tn-on-)
 		- [Pseudo-Code:](#pseudo-code)
-			- [The additional notes from this point forward will be based on The Universal Pseudo-Code format, created by Dr. Stephen Swift:](#the-additional-notes-from-this-point-forward-will-be-based-on-the-universal-pseudo-code-format-created-by-dr-stephen-swift)
 			- [Pseudo-Code Details](#pseudo-code-details)
 			- [Pseudo-Code Details Continued:](#pseudo-code-details-continued)
 			- [Variables:](#variables)
@@ -62,7 +61,7 @@ The running time of an algorithm varies with the input and typically grows with 
  - It is used to represent algorithms in a programming language independent manner.
  - We often specify the input and output and number the lines.
 
-#### The additional notes from this point forward will be based on The Universal Pseudo-Code format, created by Dr. Stephen Swift:
+ - **The additional notes from this point forward will be based on The Universal Pseudo-Code format, created by Dr. Stephen Swift:**
 ![](https://media.discordapp.net/attachments/334011383140188161/447331830740418570/unknown.png?width=558&height=384)
 
  - We use the normal concepts of variables, loops and conditional statements.
