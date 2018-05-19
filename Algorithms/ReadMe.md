@@ -37,6 +37,23 @@ Everything you need to know.
 			- [Cieling](#cieling)
 		- [Logarithms](#logarithms)
 		- [Other topics of Mathematical Foundatation which maybe of interest:](#other-topics-of-mathematical-foundatation-which-maybe-of-interest)
+	- [Time Complexity and Aymptotic notation](#time-complexity-and-aymptotic-notation)
+		- [Why Sorting?](#why-sorting)
+			- [Selection Sort Algorithms](#selection-sort-algorithms)
+		- [How fast is the Algorithm?](#how-fast-is-the-algorithm)
+			- [The Number of Operations](#the-number-of-operations)
+		- [The Big-Oh notation](#the-big-oh-notation)
+		- [Example: Binary Search](#example-binary-search)
+			- [Binary Search Example](#binary-search-example)
+		- [Big-Oh Rules](#big-oh-rules)
+		- [Asymptotic Algorithm Analysis](#asymptotic-algorithm-analysis)
+		- [The Classes of Algorithms](#the-classes-of-algorithms)
+		- [Examples of NP-COMPLETE problems](#examples-of-np-complete-problems)
+		- [Consequences of P=NP](#consequences-of-pnp)
+		- [Big-Oh and Growth Rate](#big-oh-and-growth-rate)
+		- [Relatives of Big-Oh](#relatives-of-big-oh)
+		- [Asymptotic Notation](#asymptotic-notation)
+		- [Why is Big-Oh the interesting one?](#why-is-big-oh-the-interesting-one)
 
 <!-- /TOC -->
 
@@ -324,7 +341,7 @@ By convention the variables i,j and k are often used for subscripts
   - Log<sub>2</sub>(8) = 3
 - Note that:
   - if *y* = *exp(x)* then *ln(y) = x*
-  - This is known as nural Logarithm
+  - This is known as Natural Logarithm
 - if *y = a<sup>x</sup>b<sup>z</sup>* Then
   - ln(*y*) = ln(*a<sup>x</sup>*)+ln(b<sup>z</sup>) = xln(*a*) + zln(*b*)
 
@@ -335,3 +352,145 @@ By convention the variables i,j and k are often used for subscripts
   - Adding up 1+2+3+4+....+n
 - Summary Statistics
   - Mean, median, variance, etc...
+
+## Time Complexity and Aymptotic notation
+### Why Sorting?
+- Sorting is one of the most common tasks in data analysis
+  - Examples:
+    - Print out a collection of employees sorted by salary
+    - Print out a list of names in alphabetical order
+- There are many sorting algorithms
+- The Selection Sort algorithm repeatedly finds the smallest element in the unsorted tail region of an array and moves it to the front.
+  - Question: How do you sort 11,9,17,5,12?
+
+#### Selection Sort Algorithms
+  - Sorting an Array of Integers...
+  - Array in Original Order:
+    - [11][09][17][05][12]
+  - Find the smallest and swap it with the first element:
+  - - [**11**][09][17][**05**][12]
+    - [**05**][09][17][**11**][12]
+  - Find the next smallest
+    - [**05**][**09**][17][11][12]
+  - It is already in the correct place.
+    - [**05**][**09**][17][11][12]
+  - Find the next smallest and swap it with the first element of the unsorted portion.
+    - [**05**][**09**][***17***][***11***][12]
+    - [**05**][**09**][***11***][***17***][12]
+  - Repeat.
+    - [**05**][**09**][**11**][***17***][***12***]
+  - When the unsorted portion is of length 1, we are done.
+    - [**05**][**09**][**11**][**12**][**17**]
+
+### How fast is the Algorithm?
+- In an array of size n, count how many primitive operations are needed.
+- To find the smallest, visit n elements + 2 operations for the swap.
+- To find the next smallest, visit (n-1) elements + 2 operations for the swap.
+- The last term is 2 elements visited to find the smallest + 2 operations for the swap
+
+#### The Number of Operations
+  - (n + 2) + [(n-1) + 2] +[(n-2) +2] + . .. +(1+ 2) + 2
+  - This can be simplified to n2/2  +  5n/2  + 2
+  - 5n/2 +2 is small compared to n2/2 - so let's ignore it.
+  - Also ignore the 1/2 - use the simplest  expression of the class.
+  - The number of visits is of the order n2
+
+### The Big-Oh notation
+  - The number of visits is the order n<sup>2</sup>
+  - Using Big-Oh Notation:
+    - The number of visits is O(*n<sup>2</sup>*)
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447384949532786688/unknown.png)
+
+  - The Exact number of operations is not so important.
+    - For n=100
+      - O(n) = 100
+      - O(n<sup>2</sup>) = 10000
+      - O(2<sup>n</sup>) = ![](https://cdn.discordapp.com/attachments/334011383140188161/447385507245326346/unknown.png)
+        - 1,267,650,600,228,229,401,496,703,205,376
+        - (~1.267  1030 = 1.267E30)
+
+### Example: Binary Search
+  - Task: search for a key in a **sorted** list.
+  - First check the middle list element.
+  - If the key matches the middle element, we are done.
+  - If the key is less than the middle Element, the key must be in the first half.
+  - If the key is larger than the middle lement, the key must be in the second half.
+      - Examples?
+        - Spell Checkers, Phone Books, Internet Browser Cache
+
+#### Binary Search Example
+| Media | Notes: |
+|:------------------------------:|:----------:|
+| ![](https://cdn.discordapp.com/attachments/334011383140188161/447386533603835907/unknown.png) | Binary search is an O( log2(n) ) algorithm. </br> The Binary search algorithm is much faster that the linear search algorithm of order O(n) </br>But it only works on ordered data.... |
+
+### Big-Oh Rules
+  - If *f(n)* is a polynomial of degree *d*, then *f(n)* is O(*n<sup>d</sup>*), i.e.,
+    - Drop lower-order terms.
+    - Drop constant factors.
+  - Use the simplest espression of the class.
+    - Say "*3n + 5 is O(n)*" instead of "*3n + 5 is O(3n)*"
+
+### Asymptotic Algorithm Analysis
+  - The asymptotic analysis of an algorithm determines the running time in Big-Oh notation.
+    - The word asymptotic refers to long term (large input) algorithmic trends.
+  - To perform the asymptotic analysis:
+   - We find the worst-case number of primitive operations executed as a function of the input size, T(n)
+    - We express this function with Big-Oh notation
+  - Example:
+    - We have already known that the algorithm ArrayMax executes at most T(n) = 8n  5 primitive operations
+    - We say that algorithm ArrayMax “runs in O(n) time”
+  - Since constant factors and lower-order terms are eventually dropped, we can disregard them when counting primitive operations
+    - This is why we do not have to be 100% accurate as long as we get the powers of n correct
+    - I.e. we do not miscount n3 as n2 etc…
+    - Confusing 7n for 5n **WILL MATTER**.
+
+### The Classes of Algorithms
+  - Algorithms are divided up into a number of classes:
+
+| Classification | Definition |
+|:--------------:|:----------:|
+| Computable  | Problems that can be solved using a computer |
+| Non Computable | Problems that cannot be solved using a computer |
+| P Problems | Problems that can be solved in a reasonable amount of time (polynomial Time) |
+| NP Problems | Problems that can sometimes be solved in a reasonable amount of time.<br>Non-Deterministic Algorithms.</br>The exhaustive search can be done in polynomial time. |
+| NP-COMPLETE Problems | The hardest problems in NP. </br> The exhaustive search is not polynomial. |
+| NP-HARD Problems  | Really, really difficult to solve problems, which cannot be done in a reasonable amount of time.</br> The exhaustive search is not polynomial  |
+
+### Examples of NP-COMPLETE problems
+  - The travelling salesman problem
+  - Finding the shortest common superstring
+  - Checking whether two finite automata accept the same language
+  - Given three positive integers a, b, and c, do there exist positive integers (x and y) such that ax2 + by2 = c
+
+### Consequences of P=NP
+  - If this was found to be true, the news would make world headlines!
+  - Modern society as we know it would be completely and utterly **Doomed!**
+  - All passwords could be cracked in polynomial time (very, very fast)
+  - You would not be able to secure any computer or device on the internet, wireless or mobile networks.....
+  - Algorithms that currently take years might take minutes!
+  - Proof [that NP≠P] was put forward in 2010, but has since been refuted…
+
+### Big-Oh and Growth Rate
+  - The Big-Oh notation gives an upper bound on the growth rate of a function
+  - The statement “f(n) is O(g(n))” means that the growth rate of f(n) is no more than the growth rate of g(n)
+  - f(n) grows no faster than g(n)
+  - We can use the Big-Oh notation to rank functions according to their growth rate
+
+### Relatives of Big-Oh
+
+| Relative | Symbol | Summary |
+|:--------:|:------:|:-------:|
+| Big-Omega | Ω(g) | functions that grow at least as fast as g|
+| Big-Theta | Θ(g) | functions that grow at the same rate as g|
+| Big-Oh | O(g) | functions that grow no faster than g|
+
+### Asymptotic Notation
+![](https://cdn.discordapp.com/attachments/334011383140188161/447397303175610378/unknown.png)
+
+### Why is Big-Oh the interesting one?
+  - Because we are interested in efficiency, Ω(g) will not be of much interest to us because  Ω(n<sup>2</sup>) includes all functions that grow faster than n<sup>2</sup>, for example, n<sup>3</sup> and 2<sup>n</sup>
+  - For a similar reason, we are not much interested in Q(g), the class of functions that grow at the same rate as the function *g*
+  - Big-Oh is the class of functions that will be of the greatest interest to us
+  - Considering two algorithms, we will want to know if the first is in Big-Oh of the second
+  - If yes, we know that the second algorithm does not do better than the first in solving the problem
