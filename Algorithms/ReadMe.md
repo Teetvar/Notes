@@ -83,6 +83,29 @@ Everything you need to know.
 		- [Weighted Graph](#weighted-graph)
 		- [How to Represent a Graph](#how-to-represent-a-graph)
 		- [Trees](#trees)
+	- [Classic Algorithms - Sorting](#classic-algorithms-sorting)
+		- [What Sorting Algorithms?](#what-sorting-algorithms)
+		- [A nate of Growth Rates](#a-nate-of-growth-rates)
+		- [Why Sorting?](#why-sorting)
+		- [Formal Definition of sorting](#formal-definition-of-sorting)
+		- [Bubble Sorting](#bubble-sorting)
+		- [Bubble Sort: An Example](#bubble-sort-an-example)
+		- [Bubble Sort Summary](#bubble-sort-summary)
+		- [Bubble Sort](#bubble-sort)
+		- [Best-Case Analysis](#best-case-analysis)
+		- [Worst-Case Analysis](#worst-case-analysis)
+		- [Average-Case Analysis](#average-case-analysis)
+		- [Quick Sort](#quick-sort)
+		- [Quick Sort Example](#quick-sort-example)
+		- [The Quick Sort Algorithms](#the-quick-sort-algorithms)
+			- [The Quick Sort Algorithm](#the-quick-sort-algorithm)
+			- [The PivotList Algorithm](#the-pivotlist-algorithm)
+		- [Worst-Case and Best-Case Analysis](#worst-case-and-best-case-analysis)
+			- [Worst Case](#worst-case)
+			- [Best Case](#best-case)
+		- [Average-Case Analysis](#average-case-analysis)
+		- [Comparison of Sorting Algorithms](#comparison-of-sorting-algorithms)
+		- [Radix Sort](#radix-sort)
 
 <!-- /TOC -->
 
@@ -771,7 +794,7 @@ By convention the variables i,j and k are often used for subscripts
       - Etc...
 
   - We assume, when searching Trees that the left side elements are before the parent in terms of value, such as alphabetical order.
-  - We assume Right Side elements are higher value or "after" the parent. 
+  - We assume Right Side elements are higher value or "after" the parent.
 
   - To add a node, we first search for the node we are adding
     - Searching for Stan
@@ -787,6 +810,263 @@ By convention the variables i,j and k are often used for subscripts
 
   - Trees can become unbalanced
   - Especially if we add and remove a large number of nodes
-  - The height of the tree can grow until the tree becomes a **linked list** 
+  - The height of the tree can grow until the tree becomes a **linked list**
   - Special types of self balancing trees have been developed
     - AVL, Red-Black, etc…
+
+## Classic Algorithms - Sorting
+### What Sorting Algorithms?
+  - Bubble Sorting
+  - Quick Sorting
+  - Radix Sorting
+    - And others.
+
+### A nate of Growth Rates
+![](https://cdn.discordapp.com/attachments/334011383140188161/447468028678897684/unknown.png)
+
+  - A plot of n against a number of possible T(n)
+  - The y axis is in logarithmic scale so that all the data can be viewed
+    - I am using log base 10, but often log base 2 is used
+  - When n = 100
+    - log(n) = 2, n = 100, nlog(n) = 200, n2 = 10,000 and n3 = 1,000,000
+
+### Why Sorting?
+  - Sorting applications are one of the most common algorithms
+  - There are implemented in computer games, network routing software, operating systems, AI algorithms, bin packing algorithms, etc….
+  - The sorting problem itself is easily understood
+    - It does not require a large amount of background knowledge before you can start implementing it
+  - The algorithms are quite small and manageable
+    - They can be implemented in a short period of time
+    - They are relatively simple to analyse
+
+### Formal Definition of sorting
+  - The sorting problem is a mapping from x to y, where
+    - x and y are both n length real vectors (lists and/or arrays)
+    - x is a permutation of y (different ordering)
+    - y<sub>i</sub> < y<sub>i+1</sub> for all i=0,...,n-1
+  - All of the algorithms will apply to whether we want the list sorted from largest to smallest.
+  - The algorithms can easily be applied to integers or character vectors
+    - Sorting whole numbers
+    - Sorting names and/or addresses
+
+### Bubble Sorting
+  - How do we sort the list?
+  - Apart from selection sort is there any other obvious way?
+  - Directly from the formal definition of sorting we can see that for a sorted list, any adjacent elements are in order
+  - So what about comparing each pair of neighbouring elements and swap them if there are any out of order?
+  - _This is the idea of the Bubble Sort_
+    - Why “bubble”?
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447469606580256778/unknown.png)
+
+### Bubble Sort: An Example
+  - Observations:
+    - After the first pass, the list has not been sorted yet!
+    - 8 (or n-1) comparisons have been made!
+    - The largest element (the bubble), 9, has been moved to the end!
+    - The smaller elements have been shifted towards to the beginning
+
+  - Questions:
+    - How many elements do we need to sort in the next pass?
+    - When will the sort algorithm stop?
+    - What about the best case? How many passes?
+    - What about the worst case? How many passes?
+
+![](https://media.discordapp.net/attachments/334011383140188161/447469954782986260/unknown.png)
+
+  - Overall Result:
+![](https://cdn.discordapp.com/attachments/334011383140188161/447470832940351518/unknown.png)
+
+### Bubble Sort Summary
+  - If we compare pairs of adjacent elements and none are out of order, the list is sorted
+  - If any are out of order, we must have to swap them to get an ordered list
+  - Bubble sort will make passes though the list swapping any elements that are out of order
+  - After the first pass, we know that the largest element must be in the correct place
+  - After the second pass, we know that the second largest element must be in the correct place
+  - Because of this, we can shorten each successive pass of the comparison loop
+
+### Bubble Sort
+```Java
+Algorithm 1. BubbleSort(x)
+Input: x - a list of n numbers
+ 1) Let NoSwaps = False
+ 2) While NoSwaps = False
+ 3)    Let NoSwaps = True
+ 4)    For i = 0 to n-2
+ 5)       If xi > xi+1 then
+ 6)          Swap xi and xi+1
+ 7)          Let NoSwaps = False
+ 8)       End If
+ 9)    End For
+10) End While
+Output: x – sorted (ascending)
+```
+
+  - The algorithm works by running through the list of numbers, swapping pairs that are out of order
+  - The algorithm terminates when no swaps need to be made
+  - Smaller numbers “bubble” to the top whilst larger numbers sink to the bottom
+  - Line 5 needs changing to < in order to get the algorithm to sort the list in descending order
+  - Note: to fit the pseudo code onto one slide, I have not reduced the list size by one each iteration…
+
+### Best-Case Analysis
+  - If the elements are in sorted order at the start, the for loop will compare the adjacent pairs but not make any changes
+  - This means that the `NoSwaps` variable will remain `true`
+  - The `While` loop is only done once
+  - There are n-1 comparisons in the best case
+  - B(n)≡O(n)
+
+### Worst-Case Analysis
+  - If in the best case the while loop is done once, in the worst case the while loop must be done as many times as possible
+  - This will be when the data is in **reverse order**
+  - Each pass of the For loop must make at least one swap of the elements
+  - The number of comparisons will be:
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447472176443031554/unknown.png)
+
+### Average-Case Analysis
+  - Much more difficult…
+  - How many passes do we need?
+  - We can potentially stop after any of the (at most) n-1 passes of the For loop
+  - This means that we have n-1 possibilities
+  - Our average case is given by
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447472477522624542/unknown.png)
+
+  - Where C(*i*) is the word done in the first *i* passes.
+
+  - On the first pass, we do n-1 comparisons
+  - On the second pass, we do n-2 comparisons
+  - The number of comparisons in the first i passes, in other words C(i), is given by:
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447472913612800001/unknown.png)
+
+  - Putting the equation for C(i) into the equation for A(n) we get:
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447473081498337281/unknown.png)
+
+### Quick Sort
+  - Quicksort is a divide and conquer algorithm
+  - Quicksort picks an element from the list as the pivot, and partitions the list into two pieces:
+    - Those elements smaller than the pivot value (not necessarily in order)
+    - Those elements larger than the pivot value (not necessarily in order)
+  - Quicksort is then called recursively on both pieces
+
+### Quick Sort Example
+![](https://cdn.discordapp.com/attachments/334011383140188161/447473521879285760/unknown.png)
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447473715748405248/unknown.png)
+
+### The Quick Sort Algorithms
+#### The Quick Sort Algorithm
+```Java
+Algorithm 2. QuickSort(List,First,Last)
+
+Input: List, the elements to be put into order
+       First, the index of the first element
+       Last, the index of the last element
+
+1) If First < Last Then
+2)    Let Pivot = PivotList(List,First,Last)
+3)    Call QuickSort(List,First,Pivot-1)
+4)    Call QuickSort(List,Pivot+1,Last)
+5) End If
+
+Output: List in a sorted order
+```
+
+#### The PivotList Algorithm
+```Java
+Algorithm 3. PivotList(list,first,last)
+
+Input: List- the elements to be put into order
+       First- the index of the first element
+       Last- the index of the last element
+
+1) PivotValue = list[first]
+2) PivotPoint = first
+3) For index = first+1 to last
+4)    If list[index] < PivotValue Then
+5)       PivotPoint=PivotPoint+1
+6)       Swap(list[PivotPoint],list[index])
+7)    End if
+8) End For
+9) Swap(list[first],list[PivotPoint])
+
+Output: PivotPoint
+```
+
+  - Pick the First Element as the Pivot.
+  - Set the Pivot Point as the first location of the list.
+  - Move through the list comparing the pivot element to the rest.
+  - If an element is smaller, increase the Pivot Point.
+  - Swap this element into the new Pivot Point Location.
+  - Move Pivot Value into the correct place.
+
+### Worst-Case and Best-Case Analysis
+#### Worst Case
+  - In the worst case, `PivotList` will do n-1 comparisons, but creates one partition that has n-1 elements and the other will have no elements
+    - When will this happen?
+  - Because we wind up just reducing the partition by one element each time, the worst case is given by:
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447475071024627712/unknown.png)
+
+#### Best Case
+  - `PivotList` creates two parts that are the same size
+  - And then all subsequent parts are the same size as the algorithm calls itself, this can be modelled as a binary tree
+  - Summing up over the partitions we get B(n)=O(nLog2(n))
+
+### Average-Case Analysis
+  - In the average case, we need to consider all of the possible places where the pivot point winds up
+  - Because for one partition of the list, there are n-1 comparisons done, and there are n ways to partition the list, we have:
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447475578866499595/unknown.png)
+
+- Algebra can be used to simplify this recurrence relation to:
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447475788246417410/unknown.png)
+
+- This will then solve to:
+
+![](https://media.discordapp.net/attachments/334011383140188161/447475926075441162/unknown.png?width=303&height=44)
+
+- Therefore, A(n)≡O(nLog<sub>2</sub>(n))
+
+### Comparison of Sorting Algorithms
+
+| Method | Best | Average | Worse |
+|:------:|:------:|:------:|:------:|
+| Bubblesort | O(n) | O(n<sup>2</sup>) | O(n<sup>2</sup>) |
+| Insertion Sort | O(n) | O(n<sup>2</sup>) | O(n<sup>2</sup>) |
+| Mergesort | O(*n*Log<sub>2</sub>(*n*)) | O(*n*Log<sub>2</sub>(*n*)) | O(n<sup>2</sup>) |
+| Selection Sort | O(n<sup>2</sup>) | O(n<sup>2</sup>) | O(n<sup>2</sup>) |
+
+### Radix Sort
+  - The Radix sort method works only on binary or integer data
+  - In a computer all numbers are represented as binary
+  - Radix sort works by using a binary bucket sort for each binary digit
+  - We first sort by the least significant bit 2<sup>0</sup>, then 2<sup>1</sup>, 2<sup>2</sup>, 2<sup>3</sup>, …
+  - Integers in Java have 32 bits (or 64…)
+
+```Java
+Algorithm 4. RadixSort(List,Bits)
+Input: List- the elements to be put into order
+       Bits- the numbers of bits of each List[i]
+
+1) For i = 0 to Bits-1
+2)    Let b = 2i
+3)    Bucket sort list on bit mask b
+4) End If
+
+Output: list in a sorted order
+```
+
+- Bucket sorting into two buckets involves dividing the data into two lists (for each 0 and 1)
+- The two lists are then merged
+- The ordering of the data as they are put in each bucket must be maintained
+
+- The Radix sort takes O(*nb*) time complexity
+  - n is the numbers items
+  - b is the numbers of bits
+  - Best, worse and average case
+- Can be used for alphabetical sorting, i.e. strings
+- It is very, very fast!
