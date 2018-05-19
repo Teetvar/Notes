@@ -1,43 +1,63 @@
 # Algorithms and their Application Notes:
 Everything you need to know.
-_How did Mann take the time to do this... It's like he programmed a bot to do it for him..._
+
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [Algorithms and their Application Notes:](#algorithms-and-their-application-notes)
+	- [The Foundations of Algorithm Analysis:](#the-foundations-of-algorithm-analysis)
+		- [Runtime:](#runtime)
+		- [Asymptotic Analysis:](#asymptotic-analysis)
+			- [What does Asymptotic Analysis mean?](#what-does-asymptotic-analysis-mean)
+			- [Estimating "Running Time":](#estimating-running-time)
+		- [T(_n_) & O(_n_) :](#tn-on-)
+		- [Pseudo-Code:](#pseudo-code)
+			- [The additional notes from this point forward will be based on The Universal Pseudo-Code format, created by Dr. Stephen Swift:](#the-additional-notes-from-this-point-forward-will-be-based-on-the-universal-pseudo-code-format-created-by-dr-stephen-swift)
+			- [Pseudo-Code Details](#pseudo-code-details)
+			- [Pseudo-Code Details Continued:](#pseudo-code-details-continued)
+			- [Variables:](#variables)
+			- [If Statements:](#if-statements)
+			- [For Loops:](#for-loops)
+		- [Primitive Operations](#primitive-operations)
+		- [Counting Primitive Operations](#counting-primitive-operations)
+
+<!-- /TOC -->
 
 ## The Foundations of Algorithm Analysis:
 ### Runtime:
 The running time of an algorithm varies with the input and typically grows with the input size. An algorithm may run faster on certain data sets than on others hence it would have the following run times:
- - Best case 
+ - Best case
 	 - The best case is not very informative
- - Average case 
+ - Average case
 	 -	The average case can be difficult to determine
  - Worst case
 	 - Easier to analyse
 	 - Crucial to applications such as air traffic control, surgery, finance,…
 		 - E.g. Real time applications
-		 - 
+
 ### Asymptotic Analysis:
 #### What does Asymptotic Analysis mean?
  - For our purpose, it means the long term behavior of something, in this case, an Algorithm.
-The technique uses a high-level description of the algorithm instead of an implementation
-Takes into account all possible inputs
-Allows us to evaluate the speed of an algorithm independently of the hardware/software environment
+ - The technique uses a high-level description of the algorithm instead of an implementation.
+ - Takes into account all possible inputs
+ - Allows us to evaluate the speed of an algorithm independently of the hardware/software environment
+
 #### Estimating "Running Time":
  - Write down an algorithm.
 	 - Using Pseudo-Code
  - In terms of a set of primitive operations:
 	 - Count the number of steps In terms of primitive operations, considering worst case input.
 	 -  Bound or “estimate” the running time.
-		 - Ignore constant factors 
+		 - Ignore constant factors
 		 - Bound fundamental running time
-This leads onto the Big-Oh (Big-O) notation for computational complexity.
+ - This leads onto the Big-Oh (Big-O) notation for computational complexity.
 
 ### T(_n_) & O(_n_) :
- - We estimate the running time/computation of an algorithm. 
+ - We estimate the running time/computation of an algorithm.
  - We refer to this resultant formula as T(_n_) where _n_ is the size of the input.
- - If there is more than one input we might have T(_n,m_) (etc…) where *n* and *m* are the sizes of the input. 
+ - If there is more than one input we might have T(_n,m_) (etc…) where *n* and *m* are the sizes of the input.
  - We can use *T(n)* to compute a very important property called the big-O ***O(n)***.
 
 ### Pseudo-Code:
-
  - Pseudo-Code is a cross between a programming language and written text.
  - It is used to represent algorithms in a programming language independent manner.
  - We often specify the input and output and number the lines.
@@ -49,12 +69,12 @@ This leads onto the Big-Oh (Big-O) notation for computational complexity.
  - Often we use mathematical notation:
 	-	, e.g. sets, equations, etc…
  - We do not call functions unless we describe the Pseudo-Code for them or describe what they do:
-	-	For example we would not say: 
+	-	For example we would not say:
 		-	X = Y.toLowerCase();
 	-	However we could say:
 		-	Let X equal the lower case version of Y
 		-	Unless we have previous defined the method, function, sub-routine, algorithm, etc…
- 
+
 #### Pseudo-Code Details
  - Control flow:
 	`If … Then … [Else …] End If`
