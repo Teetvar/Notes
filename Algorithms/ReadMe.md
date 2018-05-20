@@ -128,6 +128,26 @@ Everything you need to know.
 		- [Applications for MST](#applications-for-mst)
 		- [Other "Famous" Graph algorithms](#other-famous-graph-algorithms)
 		- [Brief look at Floyd-Warshall](#brief-look-at-floyd-warshall)
+	- [Search Algorithms, Representation, Fitness and Fitness Landscapes.](#search-algorithms-representation-fitness-and-fitness-landscapes)
+		- [Definition of a Search Problem:](#definition-of-a-search-problem)
+		- [What is a Heuristic?](#what-is-a-heuristic)
+		- [Search Problems](#search-problems)
+		- [Fitness](#fitness)
+		- [Fitness Landscapes](#fitness-landscapes)
+		- [Global and Local Optima](#global-and-local-optima)
+		- [Representation](#representation)
+		- [The Scales Problem](#the-scales-problem)
+	- [Heuristic Search, Hill Climbing and Simulated Annealing](#heuristic-search-hill-climbing-and-simulated-annealing)
+		- [Heuristic Search](#heuristic-search)
+		- [There is no Free Lunch!](#there-is-no-free-lunch)
+		- [Random numbers](#random-numbers)
+		- [The Exponential Function](#the-exponential-function)
+		- [Random Mutation Hill Climbing](#random-mutation-hill-climbing)
+		- [Stochastic Hill climbing](#stochastic-hill-climbing)
+		- [Random Restart Hill Climbing](#random-restart-hill-climbing)
+		- [Simulated Annealing](#simulated-annealing)
+		- [SA Convergence  Graph](#sa-convergence-graph)
+		- [A noteabout HC and SA](#a-noteabout-hc-and-sa)
 
 <!-- /TOC -->
 
@@ -1383,3 +1403,257 @@ Input: D, an n by n matrix representing distance
 
 Output: P, the shortest paths between all nodes
 ```
+
+## Search Algorithms, Representation, Fitness and Fitness Landscapes.
+
+### Definition of a Search Problem:
+  - For some problems we need to search for a solution from a (usually) very large number of possibilities
+    - **Search problems**, i.e. searching for the answer in some solution space
+  - The solution spaces for many every day problems can be very, very large, too large to search exhaustively [see last lecture…]
+  - We often need special search algorithms known as meta-heuristics
+
+### What is a Heuristic?
+  - A heuristic is a “rule of thumb” or some loose set of guidelines
+    - Getting out of a maze by keeping your hand against the maze wall
+  - Artificial Intelligence these are used to improve the performance of methods, in our case, search methods
+    - Expert knowledge
+    - Common sense
+
+### Search Problems
+  - Many problems can be thought of as searching through candidate solutions to find one that is optimal
+    - Systematically search through potential solutions without considering all of them…
+  - Need some way to evaluate the fitness of the candidate solutions
+    - Optimal = fittest
+  - Some sense of the adjacency (similarity) of solutions (or neighbourhood)
+
+### Fitness
+  - In order to search for a solution we must be able to compare potential solutions
+  - E.g. Is solution s1 better than solution s2?
+    - Thus we have the concept of fitness
+  - We must derive a function (the fitness function) that maps a solution to a value that rates how good the solution solves the problem in hand
+  - The **fitness** of a solution
+  - We either try and **maximise** or **minimise** the fitness
+  - A slight change in solution quality should result in a corresponding change in the fitness
+    - Solution quality goes down  Fitness goes down (decreases)
+    - Solution quality goes up  Fitness goes up (increases)
+
+### Fitness Landscapes
+  - It can be helpful to think of searching a landscape of solutions where:
+    - The x and y co-ordinates represent a particular solution
+    - Altitude (z axis) represents the fitness of that solution
+  - This leads to the analogy that we wish to search for or climb peaks (or descend…)
+  - Describing the nature of a landscape characterises (in an abstract way) classes of problem
+  - Search methods usually explore solutions over several variables or features
+      - E.g. searching gene expression data can involve searching over thousands of variables
+  - The collection of all possible solutions can be considered as a high dimensional space, called the **search space** or **fitness landscape**
+  - Often some concept of distance between solutions exists and some concept of how “good” each point in the search space is (fitness/objective function)
+  - Techniques exist to map a high dimensional space to a two dimensional space so we can plot the space/landscape
+
+- Smooth and regular spaces are easy to search:
+![](https://cdn.discordapp.com/attachments/334011383140188161/447678865335386112/unknown.png)
+
+- Irregular Spaces are difficult to search:
+![](https://cdn.discordapp.com/attachments/334011383140188161/447679083006918667/unknown.png)
+
+### Global and Local Optima
+  - The **global optimum** is the point or points in the search space with the best objective function evaluation
+  - A **local optimum** is the point or points in a subset or section of the search space  with the best objective function evaluation
+  - Note that the subset or section of the search space in question may contain the global optima
+  - Many search techniques can find local optima, but get “stuck” at them and cannot move on to find the global optima
+  - E.g. Random Mutation Hill Climbing
+
+### Representation
+  - When we are trying to solve a search based problem we need a way to represent a potential solution
+  - This is usually a mathematical and/or data structure based way of describing the solution to a problem
+  - A good representation:
+    - Should be a one to one mapping
+    - No redundancy
+    - No ambiguities
+    - All potential solutions should be represented
+
+### The Scales Problem
+  - We are going to spend some time looking at a particular problem in detail
+  - We are going to design the fitness function for this problem and use it in a number of worksheet exercises
+  - The aim is to see how a number of different heuristic search methods perform against this problem
+
+```
+  Given n objects of various weights,
+
+  split them into two equally heavy piles
+
+  (or as equal as possible)
+```
+
+## Heuristic Search, Hill Climbing and Simulated Annealing
+
+### Heuristic Search
+  - Recall that some (if not all) difficult problems (NP-Hard) cannot be solved in a straight forward manner
+  - We need to develop approximation algorithms to solve these problems
+  - A type of method called **Heuristic Search** can be used to try and find a solution
+  - We search for the best solution from a very large number of potential solutions
+  - We score the worth of each solution using a **Fitness Function**
+  - We try and find a solution that minimises or maximises the fitness
+    - Depending on how we rate the solution
+  - The computational complexity of Heuristic search methods is often very difficult to define
+  - We therefore often rate their performance in terms of the number of fitness function calls
+    - We compute the Big-O of this function…
+  - We aim to choose the method that finds us the global optimum in the smallest number of fitness function evaluations
+    - However back in the real world...
+
+### There is no Free Lunch!
+  - There is a theorem in heuristic search called the        No Free Lunch Theorem
+    - This is not a joke!
+  - This theorem states that just because method X is great at solving problem Y it might be no use at solving problem Z
+  - Even if problem Y and Z are very, very similar...
+  - This makes our lives as implementers of these types of algorithms rather difficult
+  - The correct use of heuristic search methods is almost like an “art”
+
+### Random numbers
+  - A random number is a number chosen/generated by chance
+  - A uniformly distributed real valued random number between **a** and **b** has equal chance of assuming any of the values between **a** and **b**
+    - We use the notation `UR(a,b)`
+    - We use `UI(a,b)` for uniformly distributed random integers
+  - If an event has a x% chance of occurring then we generate `UR(0,1)` and see if it less than x/100
+    - 83.2% is equivalent to 0.832-
+  - Check that `UR(0,1)` < 0.832 for the event to occur
+  - We need random numbers for various search based methods
+  - Some of these methods decide on what action to do based on random numbers
+  - This is rather like tossing a coin to decide on which way to go
+  - Methods based on generating random numbers are often referred to as **Stochastic** and/or **Monte-Carlo** methods
+
+  - The function `UR(a,b)` canbe implemented in Java as follows:
+```Java
+import java.util.*;
+public class HCSA
+{
+   static private Random rand = null;
+   static public void main(String args[])
+   {
+      for(int i=0;i<10;++i) System.out.println(UR(3,4));
+   }
+   static public double UR(double a,double b)
+   {
+      if (rand == null)
+      {
+         rand = new Random();
+         rand.setSeed(System.nanoTime());
+      }
+      return((b-a)*rand.nextDouble()+a);
+   }
+}
+```
+
+### The Exponential Function
+  - The exponential function, exp(x), is a mathematical function that is very important in all areas of mathematics
+  - This function raises the mathematical constant e to the power of **x**
+    - `e = exp(1)` = 2.718... (infinite number of decimal places [d/p])
+    - `exp(-2)` = 1/e2 = 0.135 (3 d/p)
+    - e has an infinite number of decimal places and is a **Transcendental** number, as is π
+    - All possible sequences will eventually occur…
+    - For example the sequence 230612 appears at position 537,886 (decimal point)…
+    - You call it in Java by using the Math.exp(x) function
+  - This function is used in the Stochastic Hill Climbing and Simulated Annealing algorithms
+
+### Random Mutation Hill Climbing
+  - The Random Mutation Hill Climbing (RMHC) algorithm is an iterative search methods that aims to find a point in the search space that maximises some objective function (fitness)
+  - The RMHC algorithm starts off at some **random** point in the search space
+  - It then looks randomly at its **close neighbours** until it find one with a **better** fitness
+  - The hill climbing algorithm then continues searching for improvement from this **new point**
+  - The idea is that the algorithms locates points that lead up (or down) a slope in the fitness space
+  - This is rather like the analogy of a hill walker trying to climb up a hill in the fog
+  - They feel around themselves until they find a nearby direction that goes up
+  - They then move to this higher point and continue searching
+  -  The RMHC is implemented in Java as follows:
+
+```Java
+Algorithm 1. RMHC(ITER)
+
+Input: ITER- the number of iterations to run for
+
+1) Let S be a random point in the search space,
+   let F be its fitness
+2) For i = 1 to ITER (number of iterations)
+3)    Let S’ be a random point close to S,
+      Let F’ be its fitness
+4)    If F’ is better than F Then
+5)       Let S = S’ and Let F = F’
+6)    End If
+7) End For
+
+Output: S- a solution
+```
+
+- The hill climbing algorithm can easily get "stuck in local optima":
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447684556351471627/unknown.png)
+
+- From the starting point, the algorithm will never reach the global optima
+
+### Stochastic Hill climbing
+  - The RMHC algorithm can have very variable performance
+  - We need to improve upon it to escape local optima
+  - We can do this by letting the algorithm accept worse fitness function values during its search
+  - This is the basis of the Stochastic Hill Climbing (SHC) algorithm
+    - The chance of accepting is a function of how bad the change is
+    - A very bad change will have a small chance of being accepted
+    - A slightly bad change will be accepted more often
+    - There are many ways of doing this, the example **decision** function in the next slide is just one of these ways…
+
+  - We accept (line 4 in the RMHC algorithm) a new solution according to the following equation:
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447686716481077248/unknown.png)
+
+  - Here:
+    - f<sup>n</sup> is the new fitness (line 3 in the RMHC algorithm)
+    -f is the old fitness
+    - T is a parameter (set to 25 for the 1,000 primes scales problem)
+  - The correct choice of T can be **very** difficult...
+  - Note that f<sup>n</sup> and f should be “swapped” (order) for a maximisation problem
+  - We get an average best of 8.0
+    - 10 runs of 1,000 iterations as in the RMHC example
+
+### Random Restart Hill Climbing
+  - A very effective version of the Hill Climbing algorithm is the Random Restart (RRHC) version
+  - Here we run the normal RMHC algorithm a number of times and record the best
+    - I.e. we start off in different sections of the search space
+    - For example we might run it 10 times for 100 iterations rather than once for 1,000 iterations
+  - For our Scales example we get an average best of 6.2
+    - 10 runs of 10*x*100 iterations
+
+### Simulated Annealing
+  - Simulated Annealing is another attempt to improve the Hill Climbing algorithm
+  - It allows a worse solution to be accepted so that local maximums can be circumnavigated
+    - Under certain conditions - similar to SHC
+  - The term “annealing” refers to the fact that the chance of accepting a worse solution reduces as the algorithm progresses
+    - An analogy to the annealing process in metal work
+    - A function of the iteration count
+  - The annealing process is simulated through maintaining a decreasing temperature
+  - This temperature should have reached zero at the end of the algorithms run
+  - Note that the parameters T0 and λ need defining, along with the acceptance function PR
+  - Note that if ITER is known (this is a user defined parameter that determines how long the algorithm runs for) then we can calculate a value for λ
+  - For TITER we choose a small value greater than zero, e.g. 0.001
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447688157258055700/unknown.png)
+
+  - So now we only have two parameters to determine, T0 and ITER
+  - ITER can be selected by trial and error, the algorithm is very fast so we can select a large value and reduce it if necessary
+    - E.g. 1,000 in our 1,000 Primes Scales example
+  - Determining T0 can be a problem
+  - Too small and the algorithm will behave like a hill climber
+  - Too large and the algorithm may never converge
+  - There are some quite **complex** methods however…
+  - The acceptance function PR is defined as follows
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447688438158721024/unknown.png)
+
+  - Note that |x| means the absolute value of x, and equals –x if x <0 or x if x ≥ 0
+
+### SA Convergence  Graph
+  - Averaged over 10 runs, note that this is a plot of current fitness and not the best
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447688856515510273/unknown.png)
+
+### A noteabout HC and SA
+  - All of the HC and the SA algorithm search for a good solution by starting at a random point and then examining neighbouring points
+  - This type of search is known as a **local or neighbourhood search methods**
+  - Later on in this module we will look at a number of global search methods that are based on maintaining a population of potential solutions
