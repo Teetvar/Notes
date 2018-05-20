@@ -106,6 +106,28 @@ Everything you need to know.
 		- [Average-Case Analysis](#average-case-analysis)
 		- [Comparison of Sorting Algorithms](#comparison-of-sorting-algorithms)
 		- [Radix Sort](#radix-sort)
+	- [Classic Algorithms - Graph Traversal](#classic-algorithms-graph-traversal)
+		- [What is "Search" in Graphs?](#what-is-search-in-graphs)
+		- [What is "Depth-First"?](#what-is-depth-first)
+		- [What is "Depth-First Search"?](#what-is-depth-first-search)
+		- [DFS Undirected graphs](#dfs-undirected-graphs)
+		- [Algorithhm: DFS(G, n)](#algorithhm-dfsg-n)
+		- [DFS RUnning Time Analysis](#dfs-running-time-analysis)
+		- [Other Types of GrThere are other ways to search a graph other than visiting all nodes](#other-types-of-grthere-are-other-ways-to-search-a-graph-other-than-visiting-all-nodes)
+		- [The Exhaustive Searching](#the-exhaustive-searching)
+		- [Algorithm: Exhaustive(G, n, p)](#algorithm-exhaustiveg-n-p)
+		- [Exhaustive Running Time](#exhaustive-running-time)
+		- [Bredth-First Searching](#bredth-first-searching)
+		- [Best-Fit Search](#best-fit-search)
+		- [A* Search](#a-search)
+		- [The A* Algorithm](#the-a-algorithm)
+		- [A* Search](#a-search)
+		- [Minimum Spanning trees](#minimum-spanning-trees)
+		- [Prim's Algorithm for most](#prims-algorithm-for-most)
+		- [Prim's Algorithm Example](#prims-algorithm-example)
+		- [Applications for MST](#applications-for-mst)
+		- [Other "Famous" Graph algorithms](#other-famous-graph-algorithms)
+		- [Brief look at Floyd-Warshall](#brief-look-at-floyd-warshall)
 
 <!-- /TOC -->
 
@@ -1070,3 +1092,294 @@ Output: list in a sorted order
   - Best, worse and average case
 - Can be used for alphabetical sorting, i.e. strings
 - It is very, very fast!
+
+## Classic Algorithms - Graph Traversal
+
+### What is "Search" in Graphs?
+  - When we work with graphs, we often wish to do something to each node in the graph exactly once
+  - Visit each node once and only once
+  - Examples:
+    - A piece of information that needs to be distributed to all the computers on a network
+    - Look for information among computer in a network
+
+### What is "Depth-First"?
+  - Depth-First: the traversal will go as far as possible down a path until a **“Dead End”** is reached
+  - Dead End:
+    - In an undirected graph:
+      - A node is a dead end if all of the nodes adjacent to it have already been visited
+    - In a directed graph:
+      - If a node has no outgoing edges, it is called a dead end
+
+### What is "Depth-First Search"?
+  1. We visit the starting node and then proceed to follow links through the graph until we reach a dead end
+  2. We then back up along our path until we find an unvisited adjacent node, and continue in that new direction
+  3. The process completes when we back up to the starting node and all the nodes adjacent to it have been visited
+  4. If presented with two choices, we choose the node with numerically and alphabetically smaller label (just for convenience)
+
+### DFS Undirected graphs
+![](https://media.discordapp.net/attachments/334011383140188161/447492572848324608/unknown.png?width=268&height=293)
+![](https://media.discordapp.net/attachments/334011383140188161/447492698375716881/unknown.png?width=322&height=295)
+![](https://cdn.discordapp.com/attachments/334011383140188161/447492888616632320/unknown.png)
+![](https://cdn.discordapp.com/attachments/334011383140188161/447493006862450689/unknown.png)
+![](https://cdn.discordapp.com/attachments/334011383140188161/447493154514403339/unknown.png)
+
+  - We continue to back up, without visiting notes 4,3,2, until we reach the starting node
+  - Since all nodes adjacent to node 1 have been visited, we are done
+  - The order that the nodes are visited: 1,2,3,4,7,5,6,8,9
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447493371209187329/unknown.png)
+
+  - Starting from the node 1, what is the order that the nodes will be first visited?
+    - 1,4,2,3,7,6,5
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447493569524006912/unknown.png)
+
+  - The order that the nodes will be first visited:
+    - 1,2,3,4,6,5,7
+  - If undirected:
+    - 1,2,3,4,5,6,7
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447493781843869740/unknown.png)
+
+  - The order that the nodes will be first visited:
+    - 1,2,3,7,4,6,5
+  - If undirected:
+    - 1,2,3,4,5,6,7
+
+### Algorithhm: DFS(G, n)
+```Java
+Algorithm 1. DFS(G,n)
+
+Input: G- the graph
+       n- the current node
+
+1) Visit(n) [Do something to/at node n...]
+2) Mark(n)
+3) For every edge nm (from n to m) in G do
+4)    If m is not marked then
+5)       DFS(G,m)
+6)    End If
+7) End For
+
+Output: Depends on the purpose of the
+        search...
+
+```
+
+### DFS RUnning Time Analysis
+- Remember:
+    - DFS is called on each node exactly once
+    - n nodes : O(n)
+    - Every edge is examined exactly twice, once from each of its vertices/nodes
+  - m edges: O(2m)
+- O(n) + O(2m)  O(n+m)
+- If we assume that the work done as we visit each node is the most complex part of the process, the traversal is of order O(n)
+
+### Other Types of GrThere are other ways to search a graph other than visiting all nodes
+  - There are other ways to search a graph other than visiting all nodes
+  - Finding a path between two nodes
+  - Finding the shortest path between two nodes (number of edges)
+  - Finding the cheapest path between two nodes (a function of edge weight)
+
+### The Exhaustive Searching
+  - The exhaustive search systematically evaluates every possible path in a graph
+  - This methods is guaranteed to find the what we are looking for
+  - However this method is unsuitable for most real world problems
+    - The time it takes to search all possible paths is combinatorial explosive as the number of nodes and edges increase
+
+### Algorithm: Exhaustive(G, n, p)
+```Java
+Algorithm 2. Exhaustive(G, n, p)
+
+Input: G- the graph
+       n- the current node
+       p– the path so far
+
+1) For every edge nm (from n to m) in G do
+2)    If m  p then
+3)       p = p  {m}
+4)       Exhaustive(G, m, p)
+5)    End If
+6) End For
+
+Output: Depends on the purpose of the
+        search...
+```
+
+### Exhaustive Running Time
+- This is very complicated to compute
+- It depends on how the nodes and edges are organised
+- If we look at the worse case, that of a complete graph:
+  - Here all the nodes are connected to each other
+  - For the first node in the path there are n-1 edges to follow
+  - For the second, n-2
+  - For the third, n-3, ...
+  - Hence we get (n-1)(n-2)(n-3)...1 = O((n-1)!)
+
+### Bredth-First Searching
+  - This search method considers neighbouring nodes first
+    - All the neighbours of the start node are expanded first
+    - Then the neighbours of the neighbours
+    - Until the goal state is found
+  - This search is very expensive since all the partial paths being considered must be stored
+  - Similar to depth-first search, breadth-first search will eventually find a path to the goal, but it may not be the best path
+  - The algorithm is similar to the exhaustive search algorithm, but it stops when the goal node is reached
+    - Exhaustive generates all paths
+
+### Best-Fit Search
+  - Best-first search is an improvement upon depth-first search
+  - A heuristic is used to decide which node is explored next
+    - A **heuristic** is a rule of thumb or best practice
+    - We will look at heuristics in much more detail later
+  - For example nodes are expanded in order of lowest cost
+
+### A* Search
+  - The A* (A Star) search method is an example of a best-first search
+  - Very good for route finding applications
+    - The AA website
+    - The tube
+  - In order for the search to work, two estimates must be available
+    - How much a partial path has cost
+    - An estimate (an under estimate) of how far is left to the goal state
+    - E.g. a lower bound on how far to travel
+  - The A* algorithm will find an optimal path without necessarily considering all the routes
+
+  - The algorithm scores each partial path with the following function: **f = g + h**
+  - Where **g** is the cost so far and **h** is the estimate of the cost to the goal state. (E.g. as the crow-flies distance)
+  - If **h** is always zero (i.e. we do not have any information about how far away the goal is), then the algorithm becomes similar to depth-first search
+  - If g is always zero, then the algorithm is called a **Greedy Search**
+
+### The A* Algorithm
+```Java
+Algorithm 3. AStar(G,S,E)
+
+Input: G- The graph being searched
+       S- The start node
+       E- The goal node
+
+1) Let P be a list of routes, currently empty,
+   this set is ordered on f, with the head of P
+   being the smallest value in f
+2) Expand all one step nodes leading from S,
+   and add them to P (ordered on f)
+3) While P ∉ ∅ and E not reached by head of P
+   Expand the head of P and add them to P
+5)    Order P according to f
+6) Wend
+
+Output: Head of P if it exists
+```
+
+### A* Search
+  - Consider the following Graph / Map:
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447670881184120833/unknown.png)
+
+  - Expand S – two choices
+    - [S,A] f=1+5=6
+    - [S,B] f=2+6=8
+  - Expand [S,A] – two choices
+    - [S,B] f=2+6=8
+    - [S,A,X] f=(1+4)+5=10
+    - [S,A,Y] f=(1+7)+8=16
+  - Expand [S,B] – two choices
+    - [S,A,X] f=(1+4)+5=10
+    - [S,B,C] f= (2+7)+4=1
+    - [S,A,Y] f=(1+7)+8=16
+    - [S,B,D] f= (2+1)+15=18
+  - Expand [S,A,X] – one choice (E - GOAL!)
+    - [S,A,X,E] is the best path... (costing 7)
+
+### Minimum Spanning trees
+  - A spanning tree is a sub-graph that is also a tree (no cycles) that contains all of the nodes of the super-graph
+    - The super-graph is usually a complete graph
+    - The edges can only come from the super-graph
+  - A graph may have many spanning trees
+  - The cost of a spanning tree is the sum of all the edge weights
+  - A minimum spanning tree (MST - there may be many) is the spanning tree with the minimum cost
+    - For n nodes there will be n-1 edges [retained/copied]…
+
+### Prim's Algorithm for most
+```Java
+Algorithm 4. PrimsMST(G=(V,E))
+
+Input: G- a weighted graph (V- vertices, E- Edges)
+
+1) Let x be a random node from V
+2) Let Vnew = {x}
+3) Let Enew = {}
+4) While Vnew  V
+5)    Choose an edge (u,v) with minimal weight,
+      such that u  Vnew and v  Vnew
+6)    Vnew = Vnew  {v}
+7)    Enew = Enew  {(u,v)}
+8) Wend
+
+Output: Gnew = (Vnew,Enew)
+```
+  - Complexity O(*n<sup>2</sup>*) where *n* is the number of nodes.
+
+### Prim's Algorithm Example
+  - Before MST:
+![](https://media.discordapp.net/attachments/334011383140188161/447672591298068481/unknown.png?width=178&height=168)
+
+  - After MST:
+![](https://media.discordapp.net/attachments/334011383140188161/447672840842379285/unknown.png?width=183&height=178)
+
+  - Method:
+    - Randomly choose A
+    - Vnew={A}
+    - Enew={}
+    - Select (A,B) (1)
+    - Vnew={A,B}
+    - Enew={(A,B)}
+    - Select (A,C) (2)
+    - Vnew={A,B,C}
+    - Enew={{A,B),(A,C)}
+    - Select (C,E) (1)
+    - Vnew={A,B,C,E}
+    - Enew={{A,B),(A,C),(C,E)}
+    - Select (E,D) (2)
+    - Vnew={A,B,C,E,D}
+    - Enew={{A,B),(A,C),(C,E),(E,D)}
+
+### Applications for MST
+  - Cancer imaging
+    - The British Columbia Cancer Research centre uses them to describe the arrangements of nuclei in skin cells
+  - Detecting actin fibres in cell images
+    - A biomedical image analysis application
+  - CfA redshift survey
+    - MSTs used for understanding the large-scale structure of the universe
+
+### Other "Famous" Graph algorithms
+  - Dijkstra's algorithm
+    - Shortest path algorithm similar to A*
+    - Given a start and a goal the algorithm finds the shortest path between the two points by computing a series of shortest paths
+    - Used in network routing
+    - Complexity O(n2) where n is the number of nodes
+  - Floyd–Warshall algorithm
+    - This algorithm computes how far each node is from every other node
+    - Computes 1-step paths, 2-step paths, etc...
+      - Is it shorter to go to a node via a node rather than directly to it?
+    - It does not return the paths
+    - Complexity O(n3) where n is the number of nodes
+
+### Brief look at Floyd-Warshall
+```Java
+Algorithm 5. FW(D)
+
+Input: D, an n by n matrix representing distance
+          pairs between nodes, if there is no edge
+          then dij = + (large values are poor)
+
+1) Let P = D
+2) For i = 1 to n
+3)    For j = 1 to n
+4)       For k = 1 to n
+5)          pij = Min(pij,pik+pkj)
+6)       End For
+7)    End For
+8) End For
+
+Output: P, the shortest paths between all nodes
+```
