@@ -165,6 +165,13 @@ Everything you need to know.
 		- [Constraint Satisfaction Problems](#constraint-satisfaction-problems)
 		- [CSP Applications](#csp-applications)
 		- [CSP Strategies](#csp-strategies)
+	- [Tabu Search and ILS](#tabu-search-and-ils)
+		- [Popuar Heuristics](#popuar-heuristics)
+		- [Tabu (Taboo) Search](#tabu-taboo-search)
+		- [Tabu Search - Key Concepts:](#tabu-search-key-concepts)
+		- [Tabu Search Stopping Conditions](#tabu-search-stopping-conditions)
+		- [Parameters of Tabu Search](#parameters-of-tabu-search)
+		- [The Pros and Cons for Tabu Search](#the-pros-and-cons-for-tabu-search)
 
 <!-- /TOC -->
 
@@ -1212,11 +1219,11 @@ Output: Depends on the purpose of the
 - O(n) + O(2m)  O(n+m)
 - If we assume that the work done as we visit each node is the most complex part of the process, the traversal is of order O(n)
 
-### Other Types of GrThere are other ways to search a graph other than visiting all nodes
-  - There are other ways to search a graph other than visiting all nodes
-  - Finding a path between two nodes
-  - Finding the shortest path between two nodes (number of edges)
-  - Finding the cheapest path between two nodes (a function of edge weight)
+### Other Types of Graphs
+	- There are other ways to search a graph other than visiting all nodes
+	  - Finding a path between two nodes
+	  - Finding the shortest path between two nodes (number of edges)
+	  - Finding the cheapest path between two nodes (a function of edge weight)
 
 ### The Exhaustive Searching
   - The exhaustive search systematically evaluates every possible path in a graph
@@ -1911,3 +1918,155 @@ a number of objects or items”
     - Randomly choose a variable that is involved with an unsatisfied constraint
     - Pick a value that reduces the number of unsatisfied constraints
     - If no such value exists pick a random value which does not increase the number of unsatisfied constraints
+
+## Tabu Search and ILS
+
+### Popuar Heuristics
+  - Hill Climbing
+    - Always go up hill (accept only better quality solutions)
+  - Simulated Annealing
+    - The concepts of annealing and temperature
+  - Iterated Local Search
+  - Tabu Search
+  - Genetic Algorithms
+    - Simulated evolution
+  - Ant Colony Optimisation
+    - Pheromones and cooperation
+  - Particle Swarm Optimisation
+    - Swarming
+
+### Tabu (Taboo) Search
+- Tabu search tries to model human memory processes
+    - Key idea: Use aspects of search history (memory) to escape from local minima
+  - A **tabu-list** is maintained throughout the search
+    - Associate **tabu attributes** with candidate solutions or solution components
+    - Moves according to the items on the list are forbidden
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447703680624623616/unknown.png)
+
+### Tabu Search - Key Concepts:
+  - A search (similar to Hill Climbing) that remembers sets of points in the search space
+    - These are called the **Tabu** list and are to be avoided
+  - The idea is that this helps in avoiding local optima
+  - However if a point is evaluated to be better than any points discovered so far, then the Tabu list may be updated
+    - Aspiration Criteria
+
+### Tabu Search Stopping Conditions
+  - Some immediate stopping conditions:
+    - No feasible solution in the neighborhood of solution
+    - The maximum amount of iterations or CPU time has been exceeded
+    - The number of iterations since the last improvement is larger than a specified number
+    - Evidence can be given than an optimum solution has been obtained
+
+### Parameters of Tabu Search
+  - Local search procedure
+  - Neighborhood structure
+  - Tabu attributes
+  - Aspiration conditions
+  - of tabu moves
+  - Maximum size of tabu list
+  - Stopping rule
+
+### The Pros and Cons for Tabu Search
+  - Pros:
+    - The use of a Tabu list
+    - Can be applied to both discrete and continuous solution spaces
+    - A meta-heuristic that guides a local search procedure to explore the solution space beyond local optimality
+    - For larger and more difficult problems (scheduling, quadratic assignment and vehicle routing), tabu search obtains solutions that rival and often surpass the best solutions previously found by other approaches
+  - Cons:
+    - Too many parameters to be determined
+    - Number of iterations could be very large
+    - Global optimum may not be found, depends on parameter settings
+    - Tabu list can grow out of control
+
+### Iterated Local Search(ILS) Key Concepts
+  - ILS uses another local search algorithm as part of the algorithm
+    - E.g. Hill Climbing
+  - It uses information regarding previously discovered local optima (and/or starting points) to locate new (and hopefully better) local optima
+  - The key algorithmic steps are as follows:
+
+```Java
+s0 = Generate initial solution
+
+s* = LocalSearch(s0)
+
+history = Φ
+Repeat
+	history = history ∪ s* [Remember previous optima and maybe start]
+	scurrent = Perturb(s*,history) [Try to avoid similar starting points]
+	scurrent* = LocalSearch(scurrent)
+	s* = Accept(s*, scurrent*, history) [Often just accept best]
+Until termination condition met
+```
+
+  - Care must be taken to assure that the perturbation step is not just mimicking the local search algorithm
+  - Note: Random Restart Hill Climbing is NOT ILS
+
+### Iterated Local Search
+  - ILS can be interpreted as walks in the space of local optima
+  - Perturbation is key
+    - Needs to be chosen so that it cannot be undone easily by subsequent local search
+    - It may consist of many perturbation steps
+    - Strong perturbation: more effective escape from local optima but similar drawbacks as random restart
+    - Weak perturbation: short subsequent local search phase but risk of revisiting previous optima
+  - Acceptance criteria: usually either the more recent or the best
+  - Often leads to very good performance
+  - Only requires few lines of additional code to existing local search algorithm
+  - State-of-the-art results with further optimisations
+
+### ILS and The Scales
+  - Representation
+    - At the moment we are representing a solution as a Binary String or Array of Integers
+    - Is this a good idea?
+    - How much redundancy is there in the representation?
+    - Each digit or part is either 0 or 1
+    - This just needs one bit, but we are using 32 bits!!! (or 64 bits – I will we assume we are using 32…)
+    - This is like writing on a pad of paper by using one sheet per letter…
+    - We can save space and thus efficiency (speed) by just using the number of bits we need
+    - For n weights and b bits (32) we would need the following number of integers (m)
+    ![](https://cdn.discordapp.com/attachments/334011383140188161/447710265837092864/unknown.png)
+    - to represent our weight/scales allocation
+  - We would need 32 integers for 1000 weights...
+
+  - We would need 32 integers for 1000 weights...
+  - Luckily! Java has an in-built method for this!
+
+```Java
+import java.util.BitSet;
+
+public class BitSetTest
+{
+   public static void main(String args[])
+   {
+      int n = 25;
+      BitSet bs = new BitSet(n);
+      bs.set(0,n,true);
+      ShowBits(bs,n);
+      bs.flip(0,n);
+      ShowBits(bs,n);
+      bs.set(17,true);
+      ShowBits(bs,n);
+   }
+   private static void ShowBits(BitSet bs,int n)
+   {
+      for(int i=0;i<n;++i) System.out.print((bs.get(i))?"1":"0");
+      System.out.println();
+   }
+}
+
+`
+- Fitness
+  - Our fitness function for the Scales problem is an O(n) algorithm
+  - However note the following:
+    - If we record and remember the LHS and RHS totals and the position (index) of the last small change
+    - If we changed a ‘1’ to a ‘0’ (moved from right to left)
+      - NewLHS = LHS + weight(index)
+      - NewRHS = RHS – weight(index)-
+  - If we changed a ‘0’ to a ‘1’ (moved from left to right)
+    - NewLHS = LHS – weight(index)
+    - NewRHS = RHS + weight(index)
+  - Thus we have created an updatable fitness function
+    - New Fitness = Old Fitness + Value based on small change
+  - We have reduced our time complexity from O(n) to O(1) [the notation for constant time]
+  - I.e. For 1000 weights our program could be up to 1000 times faster!!!
+  - Combining this with the more compact representation discussed previously we now have a much more efficient algorithm
