@@ -143,11 +143,28 @@ Everything you need to know.
 		- [Random numbers](#random-numbers)
 		- [The Exponential Function](#the-exponential-function)
 		- [Random Mutation Hill Climbing](#random-mutation-hill-climbing)
+		- [Random Start and Small Change Pseudocode:](#random-start-and-small-change-pseudocode)
 		- [Stochastic Hill climbing](#stochastic-hill-climbing)
 		- [Random Restart Hill Climbing](#random-restart-hill-climbing)
 		- [Simulated Annealing](#simulated-annealing)
 		- [SA Convergence  Graph](#sa-convergence-graph)
 		- [A noteabout HC and SA](#a-noteabout-hc-and-sa)
+	- [The Simulated Annealing Algorithm](#the-simulated-annealing-algorithm)
+	- [Parameter Optimisation](#parameter-optimisation)
+		- [Optimisation Definitions](#optimisation-definitions)
+		- [Optimisation Problems](#optimisation-problems)
+		- [Parameter Optimisation:](#parameter-optimisation)
+		- [Combinatorial Optimisation:](#combinatorial-optimisation)
+		- [Subset Selection](#subset-selection)
+		- [Permutation Problems](#permutation-problems)
+		- [Data Clustering](#data-clustering)
+		- [Bin Packing](#bin-packing)
+		- [Multi Objective Optimisation](#multi-objective-optimisation)
+		- [Weighted Fitness](#weighted-fitness)
+		- [Pareto Optimality](#pareto-optimality)
+		- [Constraint Satisfaction Problems](#constraint-satisfaction-problems)
+		- [CSP Applications](#csp-applications)
+		- [CSP Strategies](#csp-strategies)
 
 <!-- /TOC -->
 
@@ -1589,6 +1606,32 @@ Output: S- a solution
 
 - From the starting point, the algorithm will never reach the global optima
 
+### Random Start and Small Change Pseudocode:
+```Java
+Algorithm 2. RandomStart(n)
+
+Input: n- the number of weights
+1) Let S be a n length binary string (or array)
+2) For i = 1 to n
+3)    Let si = |Random Integer| Mod 2
+4) End For
+
+Output: S- a random solution to the Scales Problem
+```
+```Java
+Algorithm 3. SmallChange(Sold)
+
+Input: Sold- A binary string of length n
+1) Let S = Sold
+2) Let i be a random integer between 1 and n inclusive
+3) If si = 0 Then Let si = 1 Else Let si = 0
+
+Output: S- a solution to the Scales Problem close to Sold
+```
+
+
+
+
 ### Stochastic Hill climbing
   - The RMHC algorithm can have very variable performance
   - We need to improve upon it to escape local optima
@@ -1657,3 +1700,214 @@ Output: S- a solution
   - All of the HC and the SA algorithm search for a good solution by starting at a random point and then examining neighbouring points
   - This type of search is known as a **local or neighbourhood search methods**
   - Later on in this module we will look at a number of global search methods that are based on maintaining a population of potential solutions
+
+## The Simulated Annealing Algorithm
+```Java
+Input: T0 Starting temperature
+Iter Number of iterations
+
+λ) The cooling rate
+
+1)	Let x = a random solution
+2)	For i = 0 to Iter-1
+3)		Let f = fitness of x
+4)		Make a small change to x to make x’
+5)		Let f’ = fitness of new point x’
+6)		If f’ is worse than f Then
+7)			Let p = PR(f’,f,Ti)
+8)			If p < UR(0,1) Then
+9)				Reject change (keep x and f)
+10)			Else
+11)				Accept change (keep x’ and f’)
+12)			End If
+13)		Else
+14)			Let x = x’
+15)		End If
+16)		Let Ti+1 = λTi
+17)	End For
+
+Output: The solution x
+```
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447690705390010378/unknown.png)
+
+## Parameter Optimisation
+
+### Optimisation Definitions
+  - **“The process of making something optimal”**
+
+  - For the purposes of this module, the “thing” that we are making optimal is a solution to a problem
+  - We will often look for the highest or lowest value of a fitness function
+  - The elements that we change to seek an optimal solution are often called **parameters, variables *and/or* features**
+    - We change the allocation of weights to optimise how well balanced a set of scales is using Hill Climbing to solve the Scales problem
+
+### Optimisation Problems
+  - Parameter Optimisation
+  - Combinatorial Optimisation
+    - Subset selection
+    - Permutation problems
+    - Grouping (Clustering) problems
+    - Bin Packing
+  - Multi Objective Problems
+  - Constraint Satisfaction Problems
+
+### Parameter Optimisation:
+  - This is where we are searching for the values of a set of numbers that solve a problem, typically expressed as an equation
+    - I.e. The maximisation or minimisation of a function
+  - More formally:
+    - Find the X that maximises/minimises F(X) given:
+    - X = (x1, x2, x3, ..., xn)
+    - xi is a number
+  - Note that the exact definition of F(X) is problem dependant
+  - An example parameter optimisation problem is that of a very long range cannon
+    - We have two parameters that need to be chosen so that we accurately hit a target
+    - We cannot use the laws of motion since air density and drag need to be accounted for
+  - We can search for the optimal set of parameters
+    - Hill Climbing
+    - Simulated Annealing
+    - Many, many more....
+    - We will cover this topic in this weeks laboratory...
+
+### Combinatorial Optimisation:
+  - **
+“The process of finding an
+optimal ordering or set from
+a number of objects or items”
+**
+
+### Subset Selection
+  - Given a set of items, select a subset of the set that optimises some requirement
+  - More formally:-
+    - Given X, find a Y ⊆ X such that F(Y) is a  maximum/minimum where X is a set of objects/items
+  - If you can solve the **Scales** problem then you can solve the subset selection problem
+  - A good example of Subset Selection is the **Feature Subset Selection** problem
+  - This is where we are trying to model a set of data, but have too many features/variables/
+  description
+  - We wish to select the best subset that models the problem
+
+### Permutation Problems
+  - A **permutation** is defined as a shuffling of a set of objects
+  - A **permutation** of A, B, C, D is B, C, A, D
+  - A **permutation** of 1, 2, 3, 4 is 4, 1, 2, 3
+  - If we have N objects then there are N! possible permutations
+  - 4! = 24, 10! = 3,628,800, 100! = 9.333 10157
+  - Without loss of generality we will assume that our solution is a permutation of the numbers
+    - X = [1, 2, ..., N]
+  - We will use the notation Y = π(X) to denote that Y is a permutation of X
+  - We formally define the permutation problem as find a Y = π(X) such that F(Y) is a maximum/minimum
+  - Note that the exact definition of F(Y) is problem dependant
+  - Without loss of generality we will assume that our solution is a permutation of the numbers
+    - X = [1, 2, ..., N]
+  - We will use the notation Y = π(X) to denote that Y is a permutation of X
+  - We formally define the permutation problem as find a Y = π(X) such that F(Y) is a maximum/minimum
+  - Note that the exact definition of F(Y) is problem dependant
+  - **The Travelling Salesman Problem (TSP)** is a classic example of a permutation problem
+    - A sales person has to visit N cities as part of their job
+    The aim is to start off at one of the cities, visit each city exactly once and then to arrive back at the starting city
+    - This is called a tour
+    - The objective is to find a tour where the sum of the total distance travelled is a minimum
+    - I.e. This is analogous to the sales person trying to minimise their petrol costs
+  - Examples include parcel delivery, general vehicle routing and road gritting
+
+### Data Clustering
+  - Data Clustering is the process of arranging objects (as points) into a number of sets (k) according to “distance” or similarity
+  - Each set will be referred to as a cluster/group
+  - For the purposes of this module, each set is mutually exclusive, i.e. an item cannot be in more than one Clustering
+  ![](https://cdn.discordapp.com/attachments/334011383140188161/447696269415284736/unknown.png)
+  - Why Cluster?
+    - Knowing which objects are highly related to other objects is very useful within data analysis
+    - Less complex to model
+    - May give insight into the unknown properties of some of the objects
+    - A useful pre-processing tool
+  - The number of applications of data clustering is extensive
+    - Gene Expression Data
+    - Software Modularisation
+    - Clustering Customer Behaviour
+        - Etc...
+
+### Bin Packing
+  - The **bin packing problem** is where a number of n items of size x1,…,xn, need putting into the smallest number of bins (or boxes) of size/capacity c
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447696775969505290/unknown.png)
+
+  - There are a large number of bin packing applications:
+    - 1-dimensional e.g. CD compilations
+    - 2-dimensional e.g. stock cutting
+    - 3-dimensional e.g. van packing
+
+### Multi Objective Optimisation
+  - Some optimisation problems have more than one quality or fitness function
+  - Thus with these types of problems we might have more than one way of rating a solution
+  - For example we might be trying to optimise X = (x1, x2, x3, ..., xn)
+  - We might have a number of fitness function F1(X), F2(X), ..., Fm(X)
+  - The problem is how to compare two potential solutions when only some of the fitness function evaluations are better
+  - For example if we had two potential solutions X1 and X2 and three fitness functions such that:
+    - F1(X1) = 10, F2(X1) = 20 and F3(X1) = 30
+    - F1(X2) = 20, F2(X2) = 10 and F3(X2) = 31
+
+### Weighted Fitness
+  - One solution to this problem is to assign a numerical weight or importance to the fitness functions
+  - For example:
+    ![](https://cdn.discordapp.com/attachments/334011383140188161/447697339935883267/unknown.png)
+  - This assumes that we can assign a weight
+  -  We must have some prior knowledge of how important each function is
+  -  This also requires us to be aware of what the ranges of the fitness functions are
+  -  For example if one function is always less than 1 and another is always greater than 1,000,000 then equal weights would be pointless
+
+### Pareto Optimality
+  - Pareto optimality is a very straight forward but highly effective technique
+  - If we have two solutions X1 and X2 then we say that X1 **Pareto Dominates** X2 if Fi(X1) is better than Fi (X2) for all i
+  - We use the notation:
+![](https://media.discordapp.net/attachments/334011383140188161/447697705771204609/unknown.png?width=109&height=44)
+
+  - If neither solution dominates each other then they are **Pareto Equivalent**
+  - Thus we could search for a solution to a problem which is not dominated by any other solution
+  - The **Pareto Front** is the set of **Pareto Equivalent** solutions that are not **dominated** by any other solution
+  - Multi Objective Optimisation has a number of applications:
+    - Manufacturing
+    - Telecommunications and computer networks
+    - Logistics and transportation
+    - Timetabling and scheduling
+
+![](https://cdn.discordapp.com/attachments/334011383140188161/447698272858144778/unknown.png)
+
+### Constraint Satisfaction Problems
+  - Constraint Satisfaction Problems (CSP) are optimisation problems, where the valid solutions are constrained by a set of conditions
+  - For example, if we are seeking to optimise:-
+    - X = (x1, x2, x3, ..., xn)
+  - We might have a set of constraints such as
+    - ![](https://cdn.discordapp.com/attachments/334011383140188161/447698758050906112/unknown.png)
+
+### CSP Applications
+  - Advanced Planning and Scheduling
+    - Train scheduling
+    - Production scheduling
+  - Assignment problems
+    - Gate allocation for airports
+    - Balancing work among different people
+  - Network management and configuration
+    - Planning of cabling of telecommunication networks
+    - Network reconfiguration without service interruptions
+  - Database systems
+    - Ensure and/or restore data consistency
+  - Molecular biology
+    - DNA sequencing
+    - Chemical hypothesis reasoning
+    - Protein docking
+  - Electrical engineering
+    - Fault location
+    - Circuit layout computation
+
+### CSP Strategies
+  - Often Heuristic Search methods are used to solve CSP
+  - General Strategy
+    - Instantiate all variables randomly
+    - Use a repair or update strategy to move towards a more and more complete solution
+    - Stop if a complete solution is found
+  - Hill Climbing
+    - Modify the value of one variable such that more constraints are satisfied
+    - Restart with a random assignment if no more constraints can be satisfied (local minimum)
+  - Minimising conflicts
+    - Randomly choose a variable that is involved with an unsatisfied constraint
+    - Pick a value that reduces the number of unsatisfied constraints
+    - If no such value exists pick a random value which does not increase the number of unsatisfied constraints
