@@ -2054,7 +2054,8 @@ public class BitSetTest
    }
 }
 
-`
+```
+
 - Fitness
   - Our fitness function for the Scales problem is an O(n) algorithm
   - However note the following:
